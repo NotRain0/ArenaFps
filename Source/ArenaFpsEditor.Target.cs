@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class ArenaFpsEditorTarget : TargetRules
 {
-	public ArenaFpsEditorTarget( TargetInfo Target) : base(Target)
+	public ArenaFpsEditorTarget(TargetInfo Target) : base(Target)
 	{
 		Type = TargetType.Editor;
 		DefaultBuildSettings = BuildSettingsVersion.V5;
