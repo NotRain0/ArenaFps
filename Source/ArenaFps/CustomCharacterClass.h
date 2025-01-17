@@ -6,6 +6,8 @@
 #include "GameFramework/Character.h"
 #include "CustomCharacterClass.generated.h"
 
+class UStaticMeshComponent;
+
 UCLASS()
 class ARENAFPS_API ACustomCharacterClass : public ACharacter
 {
@@ -25,5 +27,24 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+public:
+
+	void ChangeHealth();
+
+	void ChangeMaterial();
+
+	int Health = 30;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Var")
+	UStaticMeshComponent* BodyMesh;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Var")
+	UMaterialInterface* BaseMaterial;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Var")
+	UMaterialInterface* RedMaterial;
+
+	UMaterialInterface* currentMaterial;
 
 };

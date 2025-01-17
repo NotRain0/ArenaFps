@@ -8,9 +8,12 @@
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
 #include "StatManagerComponent.h"
+#include "Camera/CameraComponent.h"
 
 // //
 #include "StatManagerComponent.h"
+#include "PlayerWidget.h"
+#include "BaseProjectile.h"
 
 
 // Called when the game starts or when spawned
@@ -30,6 +33,20 @@ void APlayerClass::BeginPlay()
 	}
 
 	statManager = Cast<UStatManagerComponent>(GetComponentByClass(UStatManagerComponent::StaticClass()));
+
+	if (APlayerController* PC = Cast<APlayerController>(GetController()))
+	{
+		if (PlayerWidgetClass)
+		{
+			PlayerWidgetRef = CreateWidget<UPlayerWidget>(PC, PlayerWidgetClass);
+			if (PlayerWidgetRef)
+			{
+				PlayerWidgetRef->AddToViewport();
+			}
+		}
+	}
+
+	CameraComponent = FindComponentByClass<UCameraComponent>();
 }
 
 void APlayerClass::Move(const FInputActionValue& Value)
@@ -67,6 +84,17 @@ void APlayerClass::Fire(const FInputActionValue& Value)
 	if (!(statManager->isAttacking))
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Attacked"));
+
+		
+		FVector CameraForwardVector = CameraComponent->GetForwardVector();
+		FVector CameraLocation = CameraComponent->GetComponentLocation();
+
+		FVector LaunchPosition = CameraLocation + (CameraForwardVector * 50.0f); //Pour créer le projectile 0.5m devant soit
+		FRotator ProjectileRotation = FRotationMatrix::MakeFromX(CameraForwardVector).Rotator();
+
+
+		ABaseProjectile* ProjectileRef = GetWorld()->SpawnActor<ABaseProjectile>(ProjectileClass, LaunchPosition, ProjectileRotation);
+		ProjectileRef->ProjectileDirection = CameraForwardVector;
 	}
 }
 

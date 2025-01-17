@@ -14,6 +14,8 @@ struct FInputActionValue;
 
 //
 class UStatManagerComponent;
+class UPlayerWidget;
+class ABaseProjectile;
 
 UCLASS()
 class ARENAFPS_API APlayerClass : public ACustomCharacterClass
@@ -26,6 +28,9 @@ protected:
 
 
 public : 
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Component")
+	class UCameraComponent* CameraComponent;;
 
 	UStatManagerComponent* statManager;
 
@@ -58,5 +63,23 @@ public:
 	void Fire(const FInputActionValue& Value);
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+public : 
+
+	
+//ref
+
+	//Widget
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
+	TSubclassOf<UPlayerWidget> PlayerWidgetClass;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UI")
+	UPlayerWidget* PlayerWidgetRef;
+
+	//Projectile
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Var")
+	TSubclassOf<ABaseProjectile> ProjectileClass;
+	
+
+
 };
 

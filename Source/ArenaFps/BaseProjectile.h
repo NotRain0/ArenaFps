@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "BaseProjectile.generated.h"
 
+
 UCLASS()
 class ARENAFPS_API ABaseProjectile : public AActor
 {
@@ -23,4 +24,23 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Var")
+	UStaticMeshComponent* MeshComponent;
+
+	UPROPERTY(EditAnywhere, Category = "Var")
+	float ProjectileDamage = 10.0f;
+
+	UPROPERTY(EditAnywhere, Category = "Var")
+	float ProjectileSpeed = 1500.0f;
+
+	UPROPERTY(EditAnywhere, Category = "Var")
+	int timeBeforeSelfDestruct = 10.0f;
+
+	FVector ProjectileDirection;
+
+	UFUNCTION()
+	void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	UFUNCTION()
+	void DestroyProjectile();
 };
