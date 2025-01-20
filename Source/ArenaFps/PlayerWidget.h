@@ -9,6 +9,9 @@
 /**
  * 
  */
+class UImage;
+class UProgressBar;
+
 UCLASS()
 class ARENAFPS_API UPlayerWidget : public UUserWidget
 {
@@ -17,9 +20,17 @@ class ARENAFPS_API UPlayerWidget : public UUserWidget
 public : 
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
-	class UImage* Crosshair_Main;
+	UImage* Crosshair_Main;
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
-	class UImage* Crosshair_Side;
-	
+	UImage* Crosshair_Side;
+
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	UImage* RedScreen;
+
+	UPROPERTY(meta = (BindWidget))
+	UProgressBar* ProgressBar;
+
+	void TurnScreenRed();
+	void ChangeProgressBarFill(float amount);
 };

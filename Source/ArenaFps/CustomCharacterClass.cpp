@@ -11,7 +11,6 @@ ACustomCharacterClass::ACustomCharacterClass()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	//BodyMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("TempMesh"));
 }
 
 // Called when the game starts or when spawned
@@ -19,43 +18,8 @@ void ACustomCharacterClass::BeginPlay()
 {
 	Super::BeginPlay();
 
-	BodyMesh = FindComponentByClass<UStaticMeshComponent>();
-	currentMaterial = BaseMaterial;
-}
-
-void ACustomCharacterClass::ChangeHealth()
-{
-	Health -= 10;
-	UE_LOG(LogTemp, Warning, TEXT("New health : %d"), Health);
-
-	if (Health == 0)
-	{
-		Destroy();
-	}
-	ChangeMaterial();
-}
-
-void ACustomCharacterClass::ChangeMaterial()
-{
-	if (!BodyMesh)
-	{
-		return;
-	}
-
-	if (currentMaterial == RedMaterial)
-	{
-		currentMaterial = BaseMaterial;
-		BodyMesh->SetMaterial(0, BaseMaterial);
-
-	}
-	else
-	{
-		currentMaterial = RedMaterial;
-		BodyMesh->SetMaterial(0, RedMaterial);
-
-		FTimerHandle TimerHandle;
-		GetWorldTimerManager().SetTimer(TimerHandle, this, &ACustomCharacterClass::ChangeMaterial, 0.15, false);
-	}
+	CapsuleComponent = GetCapsuleComponent();
+	ConfigStats();
 }
 
 // Called every frame
@@ -65,9 +29,43 @@ void ACustomCharacterClass::Tick(float DeltaTime)
 
 }
 
+void ACustomCharacterClass::ConfigStats()
+{
+	currentHealth = maxHealth;
+	//currentSpeed = baseSpeed;
+
+	UE_LOG(LogTemp, Warning, TEXT("Finished configurating stats"));
+}
+void ACustomCharacterClass::ChangeHealth(int amount)
+{
+	currentHealth += amount;
+	UE_LOG(LogTemp, Warning, TEXT("New health : %f"), currentHealth);
+
+	if (currentHealth == 0)
+	{
+		CustomDeath();
+	}
+
+	else if (currentHealth > maxHealth)
+	{
+		currentHealth = maxHealth;
+	}
+	//ChangeMaterial();
+}
+
+void ACustomCharacterClass::CustomDeath()
+{
+	Destroy();
+}
+
 // Called to bind functionality to input
 void ACustomCharacterClass::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+
+}
+
+void ACustomCharacterClass::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
 
 }

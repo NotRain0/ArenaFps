@@ -6,7 +6,9 @@
 #include "GameFramework/Character.h"
 #include "CustomCharacterClass.generated.h"
 
+
 class UStaticMeshComponent;
+class UCapsuleComponent;
 
 UCLASS()
 class ARENAFPS_API ACustomCharacterClass : public ACharacter
@@ -28,23 +30,50 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	UFUNCTION()
+	virtual void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+
+
+public : //ref
+
+	UCapsuleComponent* CapsuleComponent = GetCapsuleComponent();
+
+
 public:
+	// Stats 
 
-	void ChangeHealth();
+// Misc
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character Stat")
+	bool isFriendly;
+	bool isStunned = false;
+	bool canMove = true;
 
-	void ChangeMaterial();
+	void ConfigStats();
 
-	int Health = 30;
+// Health
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character Stat")
+	float maxHealth;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Character Stat")
+	float currentHealth;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Var")
-	UStaticMeshComponent* BodyMesh;
+	UFUNCTION(BlueprintCallable, Category = "Character Stat")
+	virtual void ChangeHealth(int Amount);
+	virtual void CustomDeath();
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Var")
-	UMaterialInterface* BaseMaterial;
+// Attack
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character Stat")
+	bool canAttack = true;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Var")
-	UMaterialInterface* RedMaterial;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character Stat")
+	bool isAttacking = false;
 
-	UMaterialInterface* currentMaterial;
+// Speed
+
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character Stat")
+	//float baseSpeed;
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character Stat")
+	//float currentSpeed;
 
 };

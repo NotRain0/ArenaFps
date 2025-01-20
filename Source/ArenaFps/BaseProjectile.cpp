@@ -38,7 +38,7 @@ void ABaseProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor
 		ABaseEnemy* EnemyRef = Cast<ABaseEnemy>(OtherActor);
 		if (EnemyRef)
 		{
-			EnemyRef->ChangeHealth();
+			EnemyRef->ChangeHealth(-20);
 		}
 		DestroyProjectile();
 	}

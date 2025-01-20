@@ -9,9 +9,9 @@
 #include "InputActionValue.h"
 #include "StatManagerComponent.h"
 #include "Camera/CameraComponent.h"
+#include "Components/CapsuleComponent.h"
 
 // //
-#include "StatManagerComponent.h"
 #include "PlayerWidget.h"
 #include "BaseProjectile.h"
 
@@ -31,8 +31,6 @@ void APlayerClass::BeginPlay()
 			Subsystem->AddMappingContext(PlayerMappingContext, 0);
 		}
 	}
-
-	statManager = Cast<UStatManagerComponent>(GetComponentByClass(UStatManagerComponent::StaticClass()));
 
 	if (APlayerController* PC = Cast<APlayerController>(GetController()))
 	{
@@ -58,7 +56,7 @@ void APlayerClass::Move(const FInputActionValue& Value)
 	//GetWorldTimerManager().SetTimer(TimerHandle, this, &AMyCharacter::ResetWalkSoundBool, 0.3f, false);
 
 
-	if (Controller != nullptr && statManager->canMove)
+	if (Controller != nullptr && canMove)
 	{
 		// add movement 
 		AddMovementInput(GetActorForwardVector(), MovementVector.Y);
@@ -79,9 +77,23 @@ void APlayerClass::Look(const FInputActionValue& Value)
 	}
 }
 
-void APlayerClass::Fire(const FInputActionValue& Value)
+void APlayerClass::Dash()
 {
-	if (!(statManager->isAttacking))
+
+}
+
+void APlayerClass::ChangeWeapon()
+{
+	currentWeapon += 1;
+	if (currentWeapon > 1) // en vrai on pourrait juste use une bool mais bon voyons grands
+	{
+		currentWeapon = 0;
+	}
+}
+
+void APlayerClass::Attack()
+{
+	if (!isAttacking && canAttack)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Attacked"));
 
@@ -92,11 +104,71 @@ void APlayerClass::Fire(const FInputActionValue& Value)
 		FVector LaunchPosition = CameraLocation + (CameraForwardVector * 50.0f); //Pour créer le projectile 0.5m devant soit
 		FRotator ProjectileRotation = FRotationMatrix::MakeFromX(CameraForwardVector).Rotator();
 
+		if (currentWeapon == 0)
+		{
+			AttackFireProjectile(LaunchPosition, ProjectileRotation);
 
-		ABaseProjectile* ProjectileRef = GetWorld()->SpawnActor<ABaseProjectile>(ProjectileClass, LaunchPosition, ProjectileRotation);
-		ProjectileRef->ProjectileDirection = CameraForwardVector;
+		}
+		
+		else if (currentWeapon == 1)
+		{
+
+			AttackSpawnSpike(LaunchPosition, ProjectileRotation);
+		}
 	}
 }
+
+void APlayerClass::AttackFireProjectile(FVector spawnPosition, FRotator spawnRotation)
+{
+	//Spawn du projectile
+
+	if (!ProjectileClass || !CameraComponent)
+	{
+		UE_LOG(LogTemp, Error, TEXT("ProjectileClass or CameraComponent is null !!!"));
+		return;
+	}
+
+	ABaseProjectile* ProjectileRef = GetWorld()->SpawnActor<ABaseProjectile>(ProjectileClass, spawnPosition, spawnRotation);
+	if (!ProjectileRef)
+	{
+		UE_LOG(LogTemp, Error, TEXT("Ref is null wtf !!!"));
+		return;
+	}
+	ProjectileRef->ProjectileDirection = CameraComponent->GetForwardVector();
+}
+
+void APlayerClass::AttackSpawnSpike(FVector spawnPosition, FRotator spawnRotation)
+{
+
+	//Spawn du spike
+	if (spikeRef)
+	{
+		spikeRef->Destroy();
+	}
+	spawnRotation = FRotator(0.0f, spawnRotation.Yaw, 0.0f);
+	spawnPosition = GetActorLocation();
+	spawnPosition = GetActorLocation() - FVector(0.0f, 0.0f, GetCapsuleComponent()->GetScaledCapsuleHalfHeight());
+
+	spikeRef = GetWorld()->SpawnActor<AActor>(SpikeClass, spawnPosition, spawnRotation);
+}
+
+void APlayerClass::ChangeHealth(int amount)
+{
+	currentHealth += amount;
+	PlayerWidgetRef->ChangeProgressBarFill(currentHealth / maxHealth);
+	UE_LOG(LogTemp, Warning, TEXT("New health : %f"), currentHealth);
+
+	if (amount < 0)
+	{
+		PlayerWidgetRef->TurnScreenRed();
+	}
+
+	if (currentHealth <= 0)
+	{
+		Destroy();
+	}
+}
+
 
 // Called to bind functionality to input
 void APlayerClass::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -114,8 +186,14 @@ void APlayerClass::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 		// Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &APlayerClass::Look);
 
+		//Change Weapon
+		EnhancedInputComponent->BindAction(ChangeWeaponAction, ETriggerEvent::Started, this, &APlayerClass::ChangeWeapon);
+
 		//Attack
-		EnhancedInputComponent->BindAction(FireAction, ETriggerEvent::Started, this, &APlayerClass::Fire);
+		EnhancedInputComponent->BindAction(FireAction, ETriggerEvent::Started, this, &APlayerClass::Attack);
+
+		//Dash
+		EnhancedInputComponent->BindAction(DashAction, ETriggerEvent::Started, this, &APlayerClass::Dash);
 	}
 	else
 	{

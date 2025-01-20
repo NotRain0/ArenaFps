@@ -36,6 +36,7 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Var")
 	int timeBeforeSelfDestruct = 10.0f;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Var")
 	FVector ProjectileDirection;
 
 	UFUNCTION()
