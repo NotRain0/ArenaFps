@@ -88,7 +88,7 @@ void ABaseEnemy::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Oth
 		UE_LOG(LogTemp, Warning, TEXT("%s detected overlap spike"), *GetName());
 		if (!ActorsArray.Contains(OtherActor))
 		{
-			ChangeHealth(-50);
+			ChangeHealth(-5);
 			CapsuleComponent->SetSimulatePhysics(true);
 			GetCapsuleComponent()->AddImpulse(FVector(0, 0, 1) * 1000.0f, NAME_None, true);
 
