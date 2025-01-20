@@ -23,6 +23,6 @@ public:
     FName TagToFind;
 
     UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
-    FBlackboardKeySelector PlayerRef;
+    FBlackboardKeySelector Target;
 
 };
