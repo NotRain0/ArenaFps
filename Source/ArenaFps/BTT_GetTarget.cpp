@@ -5,18 +5,35 @@
 
 #include "EngineUtils.h" //TActorIterator 
 #include "PlayerClass.h"
+#include "BrazierClass.h"
 
 EBTNodeResult::Type UBTT_GetTarget::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
     //Super::ExecuteTask(OwnerComp, NodeMemory);
 
-    for (TActorIterator<APlayerClass> ActorItr(GetWorld()); ActorItr; ++ActorItr)
+    if (TagToFind == "PlayerTag")
     {
-        APlayerClass* ActorFound = *ActorItr;
-        if (ActorFound && ActorFound->Tags.Contains(TagToFind))
+        for (TActorIterator<APlayerClass> ActorItr(GetWorld()); ActorItr; ++ActorItr)
         {
-            OwnerComp.GetBlackboardComponent()->SetValueAsObject(PlayerRef.SelectedKeyName, ActorFound);
-            return EBTNodeResult::Succeeded;
+            APlayerClass* ActorFound = *ActorItr;
+            if (ActorFound && ActorFound->Tags.Contains(TagToFind))
+            {
+                //AActor* TargetRef = Cast<AActor>(ActorFound);
+                OwnerComp.GetBlackboardComponent()->SetValueAsObject(Target.SelectedKeyName, ActorFound);
+                return EBTNodeResult::Succeeded;
+            }
+        }
+    }
+    else if (TagToFind == "BrazierTag")
+    {
+        for (TActorIterator<ABrazierClass> ActorItr(GetWorld()); ActorItr; ++ActorItr)
+        {
+            ABrazierClass* ActorFound = *ActorItr;
+            if (ActorFound && ActorFound->Tags.Contains(TagToFind))
+            {
+                OwnerComp.GetBlackboardComponent()->SetValueAsObject(Target.SelectedKeyName, ActorFound);
+                return EBTNodeResult::Succeeded;
+            }
         }
     }
 

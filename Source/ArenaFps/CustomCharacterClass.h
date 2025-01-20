@@ -37,7 +37,7 @@ public:
 
 public : //ref
 
-	UCapsuleComponent* CapsuleComponent = GetCapsuleComponent();
+	UCapsuleComponent* CapsuleComponent;
 
 
 public:
