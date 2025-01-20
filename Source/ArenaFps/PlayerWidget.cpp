@@ -11,6 +11,7 @@
 //
 void UPlayerWidget::TurnScreenRed()
 {
+    UE_LOG(LogTemp, Warning, TEXT("Red screen called"));
 	RedScreen->SetOpacity(1.0f);
 
     FTimerHandle TimerHandle;
@@ -19,7 +20,7 @@ void UPlayerWidget::TurnScreenRed()
         {
             RedScreen->SetOpacity(0.0f);
         }
-        }, 0.2f, false);
+        }, 0.1f, false);
 }
 
 void UPlayerWidget::ChangeProgressBarFill(float amount)

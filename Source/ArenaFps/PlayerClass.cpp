@@ -10,6 +10,7 @@
 #include "StatManagerComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/Image.h"
 
 // //
 #include "PlayerWidget.h"
@@ -40,6 +41,7 @@ void APlayerClass::BeginPlay()
 			if (PlayerWidgetRef)
 			{
 				PlayerWidgetRef->AddToViewport();
+				PlayerWidgetRef->RedScreen->SetOpacity(0.0f);
 			}
 		}
 	}
