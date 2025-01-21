@@ -12,8 +12,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="37901e41-fd24-4f9e-84cd-9d0722bae76b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Content/Blueprint/Characters/BP_BaseEnemy.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Characters/BP_BaseEnemy.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprint/Characters/BP_PlayerCharacter.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Characters/BP_PlayerCharacter.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ArenaFps/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ArenaFps/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprint/Characters/Behavior/BT_EnemyBase.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Characters/Behavior/BT_EnemyBase.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/__ExternalActors__/Maps/L_Sandbox/1/NM/KUU5SK3V2JF2IR1WF69FVS.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/__ExternalActors__/Maps/L_Sandbox/1/NM/KUU5SK3V2JF2IR1WF69FVS.uasset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -138,7 +139,8 @@
       <option name="presentableId" value="Default" />
       <updated>1737366082770</updated>
       <workItem from="1737366084263" duration="6797000" />
-      <workItem from="1737379754978" duration="2597000" />
+      <workItem from="1737379754978" duration="7439000" />
+      <workItem from="1737460682635" duration="1771000" />
     </task>
     <servers />
   </component>
