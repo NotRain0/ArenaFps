@@ -9,6 +9,7 @@
 /**
  * 
  */
+class ABrazierClass;
 
 class UStaticMeshComponent;
 
@@ -63,5 +64,10 @@ public: // Temporary, only for V0 purpose
 	void ChangeMaterial();
 
 	TArray<AActor*> ActorsArray;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character Stat")
+	ABrazierClass* brazierTarget;
+
+
 
 };
