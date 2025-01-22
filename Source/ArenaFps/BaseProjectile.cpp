@@ -30,15 +30,21 @@ void ABaseProjectile::BeginPlay()
 
 void ABaseProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Projectile is overlapping"));
 	if (OtherActor && OtherActor->ActorHasTag("EnemyTag"))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Projectile hit enemy"));
+		UE_LOG(LogTemp, Warning, TEXT("Overlap detected with %s"), *OtherComp->GetName());
 		
 		ABaseEnemy* EnemyRef = Cast<ABaseEnemy>(OtherActor);
 		if (EnemyRef)
 		{
-			EnemyRef->ChangeHealth(-20);
+			if (OtherComp->ComponentHasTag("BodyTag"))
+			{
+				EnemyRef->ChangeHealth(-ProjectileDamage);
+			}
+			else if (OtherComp->ComponentHasTag("HeadTag"))
+			{
+				EnemyRef->ChangeHealth(-ProjectileDamage * HeadShotDamageMultiplier);
+			}
 		}
 		DestroyProjectile();
 	}
