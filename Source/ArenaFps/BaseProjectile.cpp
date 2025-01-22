@@ -31,7 +31,7 @@ void ABaseProjectile::BeginPlay()
 void ABaseProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	UE_LOG(LogTemp, Warning, TEXT("Projectile is overlapping"));
-	if (OtherActor && OtherActor->ActorHasTag("Enemy"))
+	if (OtherActor && OtherActor->ActorHasTag("EnemyTag"))
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Projectile hit enemy"));
 		
