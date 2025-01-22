@@ -81,6 +81,11 @@ void AGameManagerClass::StartSpawning()
 
 void AGameManagerClass::SpawnEnemy()
 {
+	if (BrazierArray.Num() == 0)
+	{
+		UE_LOG(LogTemp, Error, TEXT("No brasier left"));
+		return;
+	}
 	//TArray<ABrazierClass*> ValidBrazierArray = BrazierArray;
 
 	///// Get valid fire
