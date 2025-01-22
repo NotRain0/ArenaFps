@@ -6,9 +6,6 @@
 #include "GameFramework/Actor.h"
 #include "SpawnerClass.generated.h"
 
-class ABrazierClass;
-class ABaseEnemy;
-
 UCLASS()
 class ARENAFPS_API ASpawnerClass : public AActor
 {
@@ -25,19 +22,4 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
-	void SpawnEnemies();
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Spawner Config")
-	TSubclassOf<ABaseEnemy> EnemyToSpawn;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Spawner Config")
-	TArray<ABrazierClass*> BrazierArray;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawner Config")
-	int amountFirstWave = 10;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawner Config")
-	int amountDelta = 5;
-
 };
