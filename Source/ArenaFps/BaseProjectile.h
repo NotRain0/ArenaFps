@@ -31,6 +31,9 @@ public:
 	float ProjectileDamage = 10.0f;
 
 	UPROPERTY(EditAnywhere, Category = "Var")
+	float HeadShotDamageMultiplier = 2.0f;
+
+	UPROPERTY(EditAnywhere, Category = "Var")
 	float ProjectileSpeed = 1500.0f;
 
 	UPROPERTY(EditAnywhere, Category = "Var")
