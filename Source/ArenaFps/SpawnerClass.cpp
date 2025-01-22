@@ -6,10 +6,6 @@
 #include "BaseEnemy.h"
 #include "BrazierClass.h"
 
-#include "Kismet/GameplayStatics.h"
-#include "GameFramework/Actor.h"
-#include "EngineUtils.h"
-
 // Sets default values
 ASpawnerClass::ASpawnerClass()
 {
@@ -22,12 +18,7 @@ ASpawnerClass::ASpawnerClass()
 void ASpawnerClass::BeginPlay()
 {
 	Super::BeginPlay();
-	
-	//for (TActorIterator<ABrazierClass> It(GetWorld()); It; ++It)
-	//{
-	//	ABrazierClass* brazierRef = *It;
-	//	BrazierArray.Add(brazierRef);
-	//}
+
 }
 
 // Called every frame
@@ -35,11 +26,4 @@ void ASpawnerClass::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-}
-
-void ASpawnerClass::SpawnEnemies()
-{
-	//spikeRef = GetWorld()->SpawnActor<AActor>(SpikeClass, spawnPosition, spawnRotation);
-
-	int fireTarget  = FMath::RandRange(0, BrazierArray.Num()-1);
 }
