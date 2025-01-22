@@ -13,23 +13,23 @@
   <component name="ChangeListManager">
     <list default="true" id="37901e41-fd24-4f9e-84cd-9d0722bae76b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ArenaFps/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ArenaFps/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprint/Characters/BP_BaseEnemy.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Characters/BP_BaseEnemy.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprint/Characters/Behavior/BP_IA_CrowdController.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Characters/Behavior/BP_IA_CrowdController.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprint/Characters/Behavior/BTTask_AttackTheTarget.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Characters/Behavior/BTTask_AttackTheTarget.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprint/Characters/Behavior/BTTask_CheckLineOfSight.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Characters/Behavior/BTTask_CheckLineOfSight.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprint/Characters/Behavior/BTTask_DetectPlayer.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Characters/Behavior/BTTask_DetectPlayer.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprint/Characters/Behavior/BT_EnemyBase.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Characters/Behavior/BT_EnemyBase.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprint/Characters/Behavior/MyBlackBoard.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Characters/Behavior/MyBlackBoard.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprint/Projectile/BP_PlayerProjectile.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Projectile/BP_PlayerProjectile.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/__ExternalActors__/Maps/L_Sandbox/1/NM/KUU5SK3V2JF2IR1WF69FVS.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/__ExternalActors__/Maps/L_Sandbox/1/NM/KUU5SK3V2JF2IR1WF69FVS.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprint/Projectile/BP_EnemyProjectile.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Projectile/BP_EnemyProjectile.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ArenaFps/BaseProjectile.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ArenaFps/BaseProjectile.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="DpaMonitoringSettings">
+    <option name="firstShow" value="false" />
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Source/ArenaFps/EnemyProjectile.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/ArenaFps/EnemyProjectile.h" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 0
@@ -150,6 +150,11 @@
       <workItem from="1737460682635" duration="1771000" />
       <workItem from="1737492283818" duration="4012000" />
       <workItem from="1737544243489" duration="5216000" />
+      <workItem from="1737550919882" duration="1405000" />
+      <workItem from="1737552438110" duration="14000" />
+      <workItem from="1737552485950" duration="292000" />
+      <workItem from="1737553011715" duration="4000" />
+      <workItem from="1737553063940" duration="170000" />
     </task>
     <servers />
   </component>
