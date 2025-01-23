@@ -84,6 +84,12 @@ public:
 
 	void DestroyFire();
 
+	UFUNCTION(BlueprintImplementableEvent, Category = "Events")
+	void KillEnemyInRangeBlueprintVisual();
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound ref")
+	class USoundBase* OnDestroyedSound;
+
 
 	UFUNCTION()
 	void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);

@@ -11,6 +11,9 @@
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/Image.h"
+#include "DrawDebugHelpers.h"
+#include "Materials/MaterialInstanceDynamic.h"
+#include "Kismet/GameplayStatics.h"
 
 // //
 #include "PlayerWidget.h"
@@ -46,7 +49,33 @@ void APlayerClass::BeginPlay()
 		}
 	}
 
+	DynamicMaterialInstance = UMaterialInstanceDynamic::Create(HandMaterial, this);
+
+	TArray<UStaticMeshComponent*> Components;
+	GetComponents<UStaticMeshComponent>(Components);
+	for (UStaticMeshComponent* Component : Components)
+	{
+		if (Component->ComponentHasTag("Sphere1"))
+		{
+			sphere1 = Component;
+		}
+		else if (Component->ComponentHasTag("Sphere2"))
+		{
+			sphere2 = Component;
+		}
+		else if (Component->ComponentHasTag("LeftArm"))
+		{
+			Component->SetMaterial(0, DynamicMaterialInstance);
+		}
+		else if (Component->ComponentHasTag("RightArm"))
+		{
+			Component->SetMaterial(0, DynamicMaterialInstance);
+		}
+	}
+
 	CameraComponent = FindComponentByClass<UCameraComponent>();
+
+	firstWeaponCurrentAmmo = firstWeaponMaxAmmo;
 }
 
 void APlayerClass::Move(const FInputActionValue& Value)
@@ -83,6 +112,11 @@ void APlayerClass::Dash()
 {
 
 }
+//
+//void APlayerClass::ReloadFirstWeaponBlueprint()
+//{
+//
+//}
 
 void APlayerClass::ChangeWeapon()
 {
@@ -97,25 +131,65 @@ void APlayerClass::Attack()
 {
 	if (!isAttacking && canAttack)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Attacked"));
-
-		
-		FVector CameraForwardVector = CameraComponent->GetForwardVector();
-		FVector CameraLocation = CameraComponent->GetComponentLocation();
-
-		FVector LaunchPosition = CameraLocation + (CameraForwardVector * 50.0f); //Pour créer le projectile 0.5m devant soit
-		FRotator ProjectileRotation = FRotationMatrix::MakeFromX(CameraForwardVector).Rotator();
-
 		if (currentWeapon == 0)
 		{
-			AttackFireProjectile(LaunchPosition, ProjectileRotation);
+			if (firstWeaponCurrentAmmo > 0 && canShootAgainFirstWeapon)
+			{
+				FVector CameraForwardVector = CameraComponent->GetForwardVector();
+				FVector CameraLocation = CameraComponent->GetComponentLocation();
+
+				FVector LaunchPosition;
+				if (shootSphere1)
+				{
+					LaunchPosition = sphere1->GetComponentLocation();
+					AnimateLeftHand();
+				}
+				else
+				{
+					LaunchPosition = sphere2->GetComponentLocation();
+					AnimateRightHand();
+				}
+				shootSphere1 = !shootSphere1;
+
+				DynamicMaterialInstance->SetScalarParameterValue(FName("HandColorParam"), (firstWeaponCurrentAmmo / firstWeaponMaxAmmo));
+
+				AttackFireProjectile(LaunchPosition, FRotator(0, 0, 0));
+
+				canShootAgainFirstWeapon = false;
+
+				FTimerHandle TimerHandleAuto;
+				GetWorld()->GetTimerManager().SetTimer(TimerHandleAuto, [this]()
+					{
+						canShootAgainFirstWeapon = true;
+					}, delayBetweenFirstWeaponShot, false);
+
+				firstWeaponCurrentAmmo -= 1;
+				if (firstWeaponCurrentAmmo == 0)
+				{
+					ReloadFirstWeaponBlueprint();
+
+					UGameplayStatics::PlaySound2D(GetWorld(), OnOverheat);
+
+					FTimerHandle TimerHandle;
+					GetWorld()->GetTimerManager().SetTimer(TimerHandle, [this]()
+						{
+							firstWeaponCurrentAmmo = firstWeaponMaxAmmo;
+							DynamicMaterialInstance->SetScalarParameterValue(FName("HandColorParam"), (firstWeaponCurrentAmmo / firstWeaponMaxAmmo));
+						}, 1.5, false);
+				}
+
+			}
+			else
+			{
+				UE_LOG(LogTemp, Warning, TEXT("No ammo, there are : %f"), firstWeaponCurrentAmmo);
+			}
 
 		}
 		
 		else if (currentWeapon == 1)
 		{
 
-			AttackSpawnSpike(LaunchPosition, ProjectileRotation);
+			UE_LOG(LogTemp, Warning, TEXT("Attacked with wep 1"));
 		}
 	}
 }
@@ -123,6 +197,26 @@ void APlayerClass::Attack()
 void APlayerClass::AttackFireProjectile(FVector spawnPosition, FRotator spawnRotation)
 {
 	//Spawn du projectile
+
+	int RandomNumber = FMath::RandRange(0, 2);
+	if (RandomNumber == 0)
+	{
+		UGameplayStatics::PlaySound2D(GetWorld(), FireBall1);
+	}
+	else if (RandomNumber == 1)
+	{
+		UGameplayStatics::PlaySound2D(GetWorld(), FireBall2);
+	}
+	else if (RandomNumber == 2)
+	{
+		UGameplayStatics::PlaySound2D(GetWorld(), FireBall3);
+	}
+
+	FVector Direction = ReturnSightTargetLocation() - spawnPosition;
+	Direction.Normalize();
+
+	spawnPosition = spawnPosition - Direction * 500;
+
 
 	if (!ProjectileClass || !CameraComponent)
 	{
@@ -136,7 +230,18 @@ void APlayerClass::AttackFireProjectile(FVector spawnPosition, FRotator spawnRot
 		UE_LOG(LogTemp, Error, TEXT("Ref is null wtf !!!"));
 		return;
 	}
-	ProjectileRef->ProjectileDirection = CameraComponent->GetForwardVector();
+
+	//FVector SphereLocation = spawnPosition; // Exemple de position
+	//float SphereRadius = 50.0f; // Rayon de la sphère
+	//int32 Segments = 12; // Complexité de la sphère
+	//FColor SphereColor = FColor::Red; // Couleur de la sphère
+	//float Duration = 10.0f; // Durée d'affichage en secondes
+	//bool bPersistentLines = true; // Si vrai, la sphère reste visible après Duration si la console est ouverte
+	//float LineThickness = 0.5; // Épaisseur des lignes de la sphère
+
+	//DrawDebugSphere(GetWorld(), SphereLocation, SphereRadius, Segments, SphereColor, bPersistentLines, Duration, 0, LineThickness);
+
+	ProjectileRef->ProjectileDirection = Direction;
 }
 
 void APlayerClass::AttackSpawnSpike(FVector spawnPosition, FRotator spawnRotation)
@@ -162,6 +267,15 @@ void APlayerClass::ChangeHealth(int amount)
 
 	if (amount < 0)
 	{
+		int RandomNumber = FMath::RandRange(0, 1);
+		if (RandomNumber == 0)
+		{
+			UGameplayStatics::PlaySound2D(GetWorld(), PlayerHit1);
+		}
+		else if (RandomNumber == 1)
+		{
+			UGameplayStatics::PlaySound2D(GetWorld(), PlayerHit2);
+		}
 		PlayerWidgetRef->TurnScreenRed();
 	}
 
@@ -171,6 +285,27 @@ void APlayerClass::ChangeHealth(int amount)
 	}
 }
 
+FVector APlayerClass::ReturnSightTargetLocation()
+{
+	FVector CameraLocation;
+	FRotator CameraRotation;
+	GetActorEyesViewPoint(CameraLocation, CameraRotation);
+
+	FVector EndPoint = CameraLocation + CameraRotation.Vector() * 2000;
+	FHitResult HitResult;
+	FCollisionQueryParams QueryParams;
+	QueryParams.AddIgnoredActor(this);
+
+	if (GetWorld()->LineTraceSingleByChannel(HitResult, CameraLocation, EndPoint, ECC_Visibility, QueryParams))
+	{
+		if (HitResult.bBlockingHit)
+		{
+			EndPoint = HitResult.Location; // Si un objet est touché, utiliser ce point
+		}
+	}
+
+	return EndPoint;
+}
 
 // Called to bind functionality to input
 void APlayerClass::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -192,7 +327,7 @@ void APlayerClass::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 		EnhancedInputComponent->BindAction(ChangeWeaponAction, ETriggerEvent::Started, this, &APlayerClass::ChangeWeapon);
 
 		//Attack
-		EnhancedInputComponent->BindAction(FireAction, ETriggerEvent::Started, this, &APlayerClass::Attack);
+		EnhancedInputComponent->BindAction(FireAction, ETriggerEvent::Triggered, this, &APlayerClass::Attack);
 
 		//Dash
 		EnhancedInputComponent->BindAction(DashAction, ETriggerEvent::Started, this, &APlayerClass::Dash);

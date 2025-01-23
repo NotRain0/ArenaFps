@@ -37,6 +37,7 @@ void ABaseProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor
 		ABaseEnemy* EnemyRef = Cast<ABaseEnemy>(OtherActor);
 		if (EnemyRef)
 		{
+			EnemyRef->isBurning = true;
 			if (OtherComp->ComponentHasTag("BodyTag"))
 			{
 				EnemyRef->ChangeHealth(-ProjectileDamage);

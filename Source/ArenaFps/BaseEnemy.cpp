@@ -7,6 +7,7 @@
 #include "GameFramework/Actor.h"
 #include "Kismet/GameplayStatics.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/StaticMeshComponent.h"
 
 
 ABaseEnemy::ABaseEnemy() // constructeur de l'enfant
@@ -21,6 +22,7 @@ void ABaseEnemy::BeginPlay()
 
 	bodyMesh = Cast<UStaticMeshComponent>(GetComponentByClass(UStaticMeshComponent::StaticClass()));
 
+	
 	baseMaterial = bodyMesh->GetMaterial(0);
 	currentMaterial = baseMaterial; // V0 STUFF
 

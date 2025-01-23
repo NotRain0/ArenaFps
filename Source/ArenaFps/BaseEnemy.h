@@ -68,6 +68,12 @@ public: // Temporary, only for V0 purpose
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character Stat")
 	ABrazierClass* brazierTarget;
 
+	bool isBurning = false;
+	
+	void SetAblaze();
+
+	//FTimer* BurningTimer;
+
 
 
 };

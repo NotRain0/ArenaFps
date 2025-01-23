@@ -103,6 +103,8 @@ void ABrazierClass::ImmuneFireToDamage()
 			}
 		}
 
+		KillEnemyInRangeBlueprintVisual();
+
 		FTimerHandle TimerHandle;
 		GetWorldTimerManager().SetTimer(TimerHandle, this, &ABrazierClass::ImmuneFireToDamage, immuneDuration, false);
 	}
@@ -112,6 +114,7 @@ void ABrazierClass::ImmuneFireToDamage()
 
 void ABrazierClass::DestroyFire()
 {
+	UGameplayStatics::PlaySound2D(GetWorld(), OnDestroyedSound);
 	Destroy();
 }
 
