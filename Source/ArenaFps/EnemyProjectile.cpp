@@ -5,6 +5,9 @@
 
 #include "PlayerClass.h"
 
+
+
+
 void AEnemyProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, 
                                       AActor* OtherActor, 
                                       UPrimitiveComponent* OtherComp, 
@@ -25,5 +28,22 @@ void AEnemyProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComp,
 		}
 		DestroyProjectile();
 	}
+	if (OtherActor && OtherActor->ActorHasTag("Wall"))
+	{
+		DestroyProjectile();
+	}
+
+
+
 	
+}
+void AEnemyProjectile::OnHit(UPrimitiveComponent* HitComp, 
+							AActor* OtherActor, 
+							UPrimitiveComponent* OtherComp, 
+							FVector NormalImpulse, 
+							const FHitResult& Hit)
+{
+	UE_LOG(LogTemp, Warning, TEXT("Projectile hit something: %s"), *OtherActor->GetName());
+	
+	DestroyProjectile(); 
 }

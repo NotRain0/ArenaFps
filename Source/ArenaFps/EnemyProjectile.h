@@ -23,6 +23,12 @@ public:
 								 bool bFromSweep, 
 								 const FHitResult& SweepResult) override;
 
+	void OnHit(UPrimitiveComponent* HitComp, 
+							AActor* OtherActor, 
+							UPrimitiveComponent* OtherComp, 
+							FVector NormalImpulse, 
+							const FHitResult& Hit);
+
 	
 };
 
