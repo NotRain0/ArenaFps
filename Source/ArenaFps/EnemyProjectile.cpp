@@ -12,9 +12,8 @@ void AEnemyProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComp,
                                       bool bFromSweep, 
                                       const FHitResult& SweepResult)
 {
-	Super::OnOverlapBegin(OverlappedComp, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, SweepResult);
 
-	UE_LOG(LogTemp, Warning, TEXT("Projectile is overlapping"));
+	//UE_LOG(LogTemp, Warning, TEXT("Projectile is overlapping"));
 	if (OtherActor && OtherActor->ActorHasTag("PlayerTag"))
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Projectile hit enemy"));
