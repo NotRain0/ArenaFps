@@ -13,10 +13,6 @@
   <component name="ChangeListManager">
     <list default="true" id="37901e41-fd24-4f9e-84cd-9d0722bae76b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ArenaFps/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ArenaFps/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprint/Characters/Behavior/BTS_ContinuousLineOfSight.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Characters/Behavior/BTS_ContinuousLineOfSight.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprint/Characters/Behavior/BTTask_DetectPlayer.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Characters/Behavior/BTTask_DetectPlayer.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprint/Characters/Behavior/BTTask_Swap_Target.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Characters/Behavior/BTTask_Swap_Target.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprint/Characters/Behavior/BT_Enemy1.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Characters/Behavior/BT_Enemy1.uasset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
