@@ -11,6 +11,7 @@
  */
 class UImage;
 class UProgressBar;
+class UTextBlock;
 
 UCLASS()
 class ARENAFPS_API UPlayerWidget : public UUserWidget
@@ -28,9 +29,20 @@ public :
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	UImage* RedScreen;
 
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	UImage* SpeedVisual;
+
 	UPROPERTY(meta = (BindWidget))
 	UProgressBar* ProgressBar;
 
+	UPROPERTY(meta = (BindWidget))
+	UTextBlock* TimerTextBlock;
+
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	UImage* OverHeatProgress;
+
 	void TurnScreenRed();
+	void DisplaySpeedOnDash();
+
 	void ChangeProgressBarFill(float amount);
 };

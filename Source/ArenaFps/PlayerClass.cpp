@@ -14,6 +14,7 @@
 #include "DrawDebugHelpers.h"
 #include "Materials/MaterialInstanceDynamic.h"
 #include "Kismet/GameplayStatics.h"
+#include "Components/TextBlock.h"
 
 // //
 #include "PlayerWidget.h"
@@ -74,8 +75,31 @@ void APlayerClass::BeginPlay()
 	}
 
 	CameraComponent = FindComponentByClass<UCameraComponent>();
-
 	firstWeaponCurrentAmmo = firstWeaponMaxAmmo;
+
+	AddTimer(); //Start counting timer til the end
+	RegenFunction();
+}
+
+// Called every frame
+void APlayerClass::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	timeSinceLastShot += DeltaTime;
+
+}
+
+void APlayerClass::RegenFunction()
+{
+	currentHealth = FMath::Clamp((currentHealth + healthRegenAmount * 0.2), 0.0f, maxHealth);
+	
+	//if (timeSinceLastShot > 0.5)
+	firstWeaponCurrentAmmo = FMath::Clamp((currentHealth + firstWeaponAmmoRegenAmount * 0.2), 0.0f, firstWeaponMaxAmmo);
+
+
+	FTimerHandle TimerHandle;
+	GetWorldTimerManager().SetTimer(TimerHandle, this, &APlayerClass::RegenFunction, 0.2f, false);
 }
 
 void APlayerClass::Move(const FInputActionValue& Value)
@@ -110,7 +134,18 @@ void APlayerClass::Look(const FInputActionValue& Value)
 
 void APlayerClass::Dash()
 {
+	if (canDash)
+	{
+		PlayerWidgetRef->DisplaySpeedOnDash();
+		canDash = !canDash;
 
+		FTimerHandle TimerHandleAuto;
+		GetWorld()->GetTimerManager().SetTimer(TimerHandleAuto, [this]()
+			{
+				canDash = !canDash;
+			}, 1.0f, false);
+	}
+	
 }
 //
 //void APlayerClass::ReloadFirstWeaponBlueprint()
@@ -133,7 +168,7 @@ void APlayerClass::Attack()
 	{
 		if (currentWeapon == 0)
 		{
-			if (firstWeaponCurrentAmmo > 0 && canShootAgainFirstWeapon)
+			if (firstWeaponCurrentAmmo > 10 && canShootAgainFirstWeapon)
 			{
 				FVector CameraForwardVector = CameraComponent->GetForwardVector();
 				FVector CameraLocation = CameraComponent->GetComponentLocation();
@@ -156,6 +191,7 @@ void APlayerClass::Attack()
 				AttackFireProjectile(LaunchPosition, FRotator(0, 0, 0));
 
 				canShootAgainFirstWeapon = false;
+				timeSinceLastShot = 0.0f;
 
 				FTimerHandle TimerHandleAuto;
 				GetWorld()->GetTimerManager().SetTimer(TimerHandleAuto, [this]()
@@ -163,8 +199,8 @@ void APlayerClass::Attack()
 						canShootAgainFirstWeapon = true;
 					}, delayBetweenFirstWeaponShot, false);
 
-				firstWeaponCurrentAmmo -= 1;
-				if (firstWeaponCurrentAmmo == 0)
+				firstWeaponCurrentAmmo -= 10;
+				if (firstWeaponCurrentAmmo < 10)
 				{
 					ReloadFirstWeaponBlueprint();
 
@@ -179,11 +215,6 @@ void APlayerClass::Attack()
 				}
 
 			}
-			else
-			{
-				UE_LOG(LogTemp, Warning, TEXT("No ammo, there are : %f"), firstWeaponCurrentAmmo);
-			}
-
 		}
 		
 		else if (currentWeapon == 1)
@@ -281,7 +312,29 @@ void APlayerClass::ChangeHealth(int amount)
 
 	if (currentHealth <= 0)
 	{
-		Destroy();
+		//Destroy();
+		PlayerWidgetRef->RemoveFromViewport();
+
+		GameOverWidgetRef = CreateWidget<UUserWidget>(GetWorld(), GameOverWidgetClass);
+		if (GameOverWidgetRef)
+		{
+			GameOverWidgetRef->AddToViewport();
+
+			APlayerController* PC = GetWorld()->GetFirstPlayerController();
+			if (PC)
+			{
+				PC->SetPause(true);
+
+				// Assurez-vous que l'UI peut toujours recevoir des entrées
+				FInputModeUIOnly InputMode;
+				InputMode.SetWidgetToFocus(GameOverWidgetRef->TakeWidget());
+				PC->SetInputMode(InputMode);
+
+				// Activer le curseur si nécessaire
+				PC->bShowMouseCursor = true;
+			}
+		}
+
 	}
 }
 
@@ -336,4 +389,18 @@ void APlayerClass::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	{
 		UE_LOG(LogTemp, Warning, TEXT("No EIC found"));
 	}
+}
+
+void APlayerClass::AddTimer()
+{
+	timeSinceStart += 1;
+	int Minutes = timeSinceStart / 60;
+	int Seconds = timeSinceStart % 60;
+
+	FString TimeString = FString::Printf(TEXT("%02d:%02d"), Minutes, Seconds);
+
+	PlayerWidgetRef->TimerTextBlock->SetText(FText::FromString(TimeString));
+
+	FTimerHandle TimerHandle;
+	GetWorldTimerManager().SetTimer(TimerHandle, this, &APlayerClass::AddTimer, 1.0f, false);
 }

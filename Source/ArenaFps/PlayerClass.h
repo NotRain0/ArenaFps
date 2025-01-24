@@ -25,6 +25,9 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+public:
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
 
 public : 
 
@@ -80,8 +83,12 @@ public :
 	//Widget
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
 	TSubclassOf<UPlayerWidget> PlayerWidgetClass;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
+	TSubclassOf<UPlayerWidget> GameOverWidgetClass;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UI")
 	UPlayerWidget* PlayerWidgetRef;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UI")
+	UUserWidget* GameOverWidgetRef;
 
 
 	//Projectile
@@ -109,13 +116,21 @@ public :
 	class UMaterialInstanceDynamic* DynamicMaterialInstance;
 
 	bool shootSphere1 = true;
+
+	int timeSinceStart = -1;
+	void AddTimer();
 	
 
 public:
 	// Stats 
 	// 
+	bool canDash = true; 
 //Health
 	virtual void ChangeHealth(int Amount);
+
+	// Per Second
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character Stat")
+	float healthRegenAmount;
 
 	/// Weapons are 0 or 1 so far
 	/// 0 is gun
@@ -139,15 +154,22 @@ public:
 	bool canRegenAmmo = true;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character Stat")
-	float firstWeaponMaxAmmo = 15;
+	float firstWeaponMaxAmmo = 100;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character Stat")
-	float firstWeaponCurrentAmmo;
+	float firstWeaponCurrentAmmo = 5;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character Stat")
+	float firstWeaponAmmoRegenAmount;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character Stat")
 	float delayBetweenFirstWeaponShot = 0.35;
 
+	float timeSinceLastShot = 0.0f;
+
 	bool canShootAgainFirstWeapon = true;
+
+	void RegenFunction();
 
 	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character Stat")
 	//float firstWeaponReloadTime = 1.5;

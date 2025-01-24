@@ -7,6 +7,7 @@
 #include "Components/TextBlock.h"
 #include "Components/Image.h"
 #include "Components/ProgressBar.h"
+
 ///
 //
 void UPlayerWidget::TurnScreenRed()
@@ -21,6 +22,20 @@ void UPlayerWidget::TurnScreenRed()
             RedScreen->SetOpacity(0.0f);
         }
         }, 0.1f, false);
+}
+
+void UPlayerWidget::DisplaySpeedOnDash()
+{
+    UE_LOG(LogTemp, Warning, TEXT("Red screen called"));
+    SpeedVisual->SetOpacity(1.0f);
+
+    FTimerHandle TimerHandle;
+    GetWorld()->GetTimerManager().SetTimer(TimerHandle, [this]() {
+        if (SpeedVisual)
+        {
+            SpeedVisual->SetOpacity(0.0f);
+        }
+        }, 0.35f, false);
 }
 
 void UPlayerWidget::ChangeProgressBarFill(float amount)

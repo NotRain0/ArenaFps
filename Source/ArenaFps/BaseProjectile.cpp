@@ -4,6 +4,7 @@
 #include "BaseProjectile.h"
 
 #include "BaseEnemy.h"
+#include "TextActor.h"
 //
 
 // Sets default values
@@ -37,14 +38,28 @@ void ABaseProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor
 		ABaseEnemy* EnemyRef = Cast<ABaseEnemy>(OtherActor);
 		if (EnemyRef)
 		{
+			float damageToDisplay = 0;
+			bool isHeadshot = false; 
 			EnemyRef->isBurning = true;
+
 			if (OtherComp->ComponentHasTag("BodyTag"))
 			{
 				EnemyRef->ChangeHealth(-ProjectileDamage);
+				damageToDisplay = ProjectileDamage;
+
+
 			}
 			else if (OtherComp->ComponentHasTag("HeadTag"))
 			{
 				EnemyRef->ChangeHealth(-ProjectileDamage * HeadShotDamageMultiplier);
+				damageToDisplay = ProjectileDamage * HeadShotDamageMultiplier;
+				isHeadshot = true;
+			}
+
+			ATextActor* TextActorRef = GetWorld()->SpawnActor<ATextActor>(TextActorToSpawn, EnemyRef->GetActorLocation(), FRotator(0,0,0));
+			if (TextActorRef)
+			{
+				TextActorRef->SetDamageText(damageToDisplay, isHeadshot);
 			}
 		}
 		DestroyProjectile();
