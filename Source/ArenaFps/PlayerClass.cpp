@@ -95,7 +95,7 @@ void APlayerClass::RegenFunction()
 	currentHealth = FMath::Clamp((currentHealth + healthRegenAmount * 0.2), 0.0f, maxHealth);
 	
 	//if (timeSinceLastShot > 0.5)
-	if (firstWeaponCurrentAmmo > 10)
+	if (firstWeaponCurrentAmmo >= 10)
 	{
 		firstWeaponCurrentAmmo = FMath::Clamp((firstWeaponCurrentAmmo + firstWeaponAmmoRegenAmount * 0.2), 0.0f, firstWeaponMaxAmmo);
 		PlayerWidgetRef->ChangeOverHeatProgress(firstWeaponCurrentAmmo / firstWeaponMaxAmmo);
@@ -172,7 +172,7 @@ void APlayerClass::Attack()
 	{
 		if (currentWeapon == 0)
 		{
-			if (firstWeaponCurrentAmmo > 10 && canShootAgainFirstWeapon)
+			if (firstWeaponCurrentAmmo >= 10 && canShootAgainFirstWeapon)
 			{
 				FVector CameraForwardVector = CameraComponent->GetForwardVector();
 				FVector CameraLocation = CameraComponent->GetComponentLocation();
@@ -284,16 +284,16 @@ void APlayerClass::AttackFireProjectile(FVector spawnPosition, FRotator spawnRot
 void APlayerClass::AttackSpawnSpike(FVector spawnPosition, FRotator spawnRotation)
 {
 
-	//Spawn du spike
-	if (spikeRef)
-	{
-		spikeRef->Destroy();
-	}
-	spawnRotation = FRotator(0.0f, spawnRotation.Yaw, 0.0f);
-	spawnPosition = GetActorLocation();
-	spawnPosition = GetActorLocation() - FVector(0.0f, 0.0f, GetCapsuleComponent()->GetScaledCapsuleHalfHeight());
+	////Spawn du spike
+	//if (spikeRef)
+	//{
+	//	spikeRef->Destroy();
+	//}
+	//spawnRotation = FRotator(0.0f, spawnRotation.Yaw, 0.0f);
+	//spawnPosition = GetActorLocation();
+	//spawnPosition = GetActorLocation() - FVector(0.0f, 0.0f, GetCapsuleComponent()->GetScaledCapsuleHalfHeight());
 
-	spikeRef = GetWorld()->SpawnActor<AActor>(SpikeClass, spawnPosition, spawnRotation);
+	//spikeRef = GetWorld()->SpawnActor<AActor>(SpikeClass, spawnPosition, spawnRotation);
 }
 
 void APlayerClass::ChangeHealth(int amount)
