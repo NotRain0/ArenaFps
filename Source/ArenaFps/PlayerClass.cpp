@@ -354,7 +354,7 @@ FVector APlayerClass::ReturnSightTargetLocation()
 	FRotator CameraRotation;
 	GetActorEyesViewPoint(CameraLocation, CameraRotation);
 
-	FVector EndPoint = CameraLocation + CameraRotation.Vector() * 2000;
+	FVector EndPoint = CameraLocation + CameraRotation.Vector() * 10000;
 	FHitResult HitResult;
 	FCollisionQueryParams QueryParams;
 	QueryParams.AddIgnoredActor(this);
