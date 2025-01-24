@@ -39,7 +39,8 @@ void ABaseProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor
 		if (EnemyRef)
 		{
 			float damageToDisplay = 0;
-			bool isHeadshot = false;
+			bool isHeadshot = false; 
+			EnemyRef->isBurning = true;
 
 			if (OtherComp->ComponentHasTag("BodyTag"))
 			{
@@ -53,11 +54,6 @@ void ABaseProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor
 				EnemyRef->ChangeHealth(-ProjectileDamage * HeadShotDamageMultiplier);
 				damageToDisplay = ProjectileDamage * HeadShotDamageMultiplier;
 				isHeadshot = true;
-			}
-
-			if (EnemyRef)
-			{
-				EnemyRef->StartBurning();
 			}
 
 			ATextActor* TextActorRef = GetWorld()->SpawnActor<ATextActor>(TextActorToSpawn, EnemyRef->GetActorLocation(), FRotator(0,0,0));
