@@ -97,8 +97,9 @@ public :
 
 	//Spike
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character Ref")
-	TSubclassOf<AActor> SpikeClass;
-	AActor* spikeRef;
+	TSubclassOf<ABaseProjectile> SecondWeaponProjectileClass;
+
+	ABaseProjectile* ExplosiveRef;
 
 	UPROPERTY(BlueprintReadWrite)
 	FVector2D MovementVector = FVector2D(0, 0);

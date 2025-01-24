@@ -9,6 +9,8 @@
 #include "Components/CapsuleComponent.h"
 #include "Components/StaticMeshComponent.h"
 
+#include "TextActor.h"
+
 
 ABaseEnemy::ABaseEnemy() // constructeur de l'enfant
 {
@@ -25,6 +27,7 @@ void ABaseEnemy::BeginPlay()
 	
 	baseMaterial = bodyMesh->GetMaterial(0);
 	currentMaterial = baseMaterial; // V0 STUFF
+	defaultMaterial = baseMaterial;
 
 	CapsuleComponent->OnComponentBeginOverlap.AddDynamic(this, &ABaseEnemy::OnOverlapBegin);
 	CapsuleComponent->SetSimulatePhysics(false);
@@ -68,6 +71,44 @@ void ABaseEnemy::ChangeMaterial()
 void ABaseEnemy::Attack()
 {
 
+}
+
+void ABaseEnemy::DealBurningDamage()
+{
+	ATextActor* TextActorRef = GetWorld()->SpawnActor<ATextActor>(BurningTextActorToSpawn, GetActorLocation(), FRotator(0, 0, 0));
+	if (TextActorRef)
+	{
+		TextActorRef->SetDamageText(5, false);
+	}
+
+	if (burnCounter > 0)
+	{
+		burnCounter -= 1;
+		FTimerHandle TimerHandleRef;
+		GetWorld()->GetTimerManager().SetTimer(TimerHandleRef, this, &ABaseEnemy::DealBurningDamage, 1.0f, false);
+
+	}
+}
+
+void ABaseEnemy::StartBurning()
+{
+	GetWorld()->GetTimerManager().SetTimer(BurningTimerRef, this, &ABaseEnemy::StopBurning, 3.0f, false);
+	baseMaterial = burningMaterial;
+
+	burnCounter = 2;
+	isBurning = true;
+
+	FTimerHandle TimerHandleRef;
+	GetWorld()->GetTimerManager().SetTimer(TimerHandleRef, this, &ABaseEnemy::DealBurningDamage, 1.0f, false);
+}
+
+void ABaseEnemy::StopBurning()
+{
+	baseMaterial = defaultMaterial;
+	currentMaterial = baseMaterial;
+	bodyMesh->SetMaterial(0, baseMaterial);
+
+	isBurning = false;
 }
 
 // En théorie c'est l'attaque qui devrait changer la vie, mais pour la V0 je fais ca comme ca, on changera après
