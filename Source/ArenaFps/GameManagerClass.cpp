@@ -6,7 +6,6 @@
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/Actor.h"
 #include "EngineUtils.h"
-#include "Kismet/GameplayStatics.h"
 
 #include "SpawnerClass.h"
 #include "BaseEnemy.h"
@@ -30,6 +29,7 @@ void AGameManagerClass::BeginPlay()
 	{
 		ABrazierClass* brazierRef = *It;
 		BrazierArray.Add(brazierRef);
+		brazierRef->GameManagerRef = this;
 	}
 
 	for (TActorIterator<ASpawnerClass> It(GetWorld()); It; ++It) //

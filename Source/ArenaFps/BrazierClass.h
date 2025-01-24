@@ -7,6 +7,7 @@
 #include "BrazierClass.generated.h"
 
 class ABaseEnemy;
+class AGameManagerClass;
 
 UCLASS()
 class ARENAFPS_API ABrazierClass : public AActor
@@ -90,6 +91,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Sound ref")
 	class USoundBase* OnDestroyedSound;
 
+	AGameManagerClass* GameManagerRef;
 
 	UFUNCTION()
 	void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);

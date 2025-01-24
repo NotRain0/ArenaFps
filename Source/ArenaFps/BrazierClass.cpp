@@ -4,9 +4,11 @@
 #include "BrazierClass.h"
 
 #include "Components/BoxComponent.h"
-#include "BaseEnemy.h"
-#include "PlayerClass.h"
 #include "Kismet/GameplayStatics.h"
+
+#include "BaseEnemy.h"
+#include "GameManagerClass.h"
+#include "PlayerClass.h"
 
 // Sets default values
 ABrazierClass::ABrazierClass()
@@ -115,6 +117,7 @@ void ABrazierClass::ImmuneFireToDamage()
 void ABrazierClass::DestroyFire()
 {
 	UGameplayStatics::PlaySound2D(GetWorld(), OnDestroyedSound);
+	GameManagerRef->BrazierArray.Remove(this);
 	Destroy();
 }
 

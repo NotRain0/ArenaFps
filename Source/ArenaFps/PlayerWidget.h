@@ -41,8 +41,20 @@ public :
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	UImage* OverHeatProgress;
 
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	UImage* FireFeedback1;
+
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	UImage* FireFeedback2;
+
+	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
+	UImage* FireFeedback3;
+
 	void TurnScreenRed();
 	void DisplaySpeedOnDash();
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Events")
+	void ChangeOverHeatProgress(float percent);
 
 	void ChangeProgressBarFill(float amount);
 };

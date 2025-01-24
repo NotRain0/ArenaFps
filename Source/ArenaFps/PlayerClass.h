@@ -84,7 +84,7 @@ public :
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
 	TSubclassOf<UPlayerWidget> PlayerWidgetClass;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
-	TSubclassOf<UPlayerWidget> GameOverWidgetClass;
+	TSubclassOf<UUserWidget> GameOverWidgetClass;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UI")
 	UPlayerWidget* PlayerWidgetRef;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "UI")

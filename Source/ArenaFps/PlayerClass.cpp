@@ -95,7 +95,11 @@ void APlayerClass::RegenFunction()
 	currentHealth = FMath::Clamp((currentHealth + healthRegenAmount * 0.2), 0.0f, maxHealth);
 	
 	//if (timeSinceLastShot > 0.5)
-	firstWeaponCurrentAmmo = FMath::Clamp((currentHealth + firstWeaponAmmoRegenAmount * 0.2), 0.0f, firstWeaponMaxAmmo);
+	if (firstWeaponCurrentAmmo > 10)
+	{
+		firstWeaponCurrentAmmo = FMath::Clamp((firstWeaponCurrentAmmo + firstWeaponAmmoRegenAmount * 0.2), 0.0f, firstWeaponMaxAmmo);
+		PlayerWidgetRef->ChangeOverHeatProgress(firstWeaponCurrentAmmo / firstWeaponMaxAmmo);
+	}
 
 
 	FTimerHandle TimerHandle;
@@ -200,6 +204,7 @@ void APlayerClass::Attack()
 					}, delayBetweenFirstWeaponShot, false);
 
 				firstWeaponCurrentAmmo -= 10;
+				PlayerWidgetRef->ChangeOverHeatProgress(firstWeaponCurrentAmmo / firstWeaponMaxAmmo);
 				if (firstWeaponCurrentAmmo < 10)
 				{
 					ReloadFirstWeaponBlueprint();
@@ -211,6 +216,7 @@ void APlayerClass::Attack()
 						{
 							firstWeaponCurrentAmmo = firstWeaponMaxAmmo;
 							DynamicMaterialInstance->SetScalarParameterValue(FName("HandColorParam"), (firstWeaponCurrentAmmo / firstWeaponMaxAmmo));
+							PlayerWidgetRef->ChangeOverHeatProgress(firstWeaponCurrentAmmo / firstWeaponMaxAmmo);
 						}, 1.5, false);
 				}
 
@@ -313,7 +319,7 @@ void APlayerClass::ChangeHealth(int amount)
 	if (currentHealth <= 0)
 	{
 		//Destroy();
-		PlayerWidgetRef->RemoveFromViewport();
+		PlayerWidgetRef->RemoveFromParent();
 
 		GameOverWidgetRef = CreateWidget<UUserWidget>(GetWorld(), GameOverWidgetClass);
 		if (GameOverWidgetRef)
@@ -329,6 +335,10 @@ void APlayerClass::ChangeHealth(int amount)
 				FInputModeUIOnly InputMode;
 				InputMode.SetWidgetToFocus(GameOverWidgetRef->TakeWidget());
 				PC->SetInputMode(InputMode);
+
+				PC->bEnableClickEvents = true;
+				PC->bEnableMouseOverEvents = true;
+				PC->bEnableTouchEvents = true;
 
 				// Activer le curseur si nécessaire
 				PC->bShowMouseCursor = true;
