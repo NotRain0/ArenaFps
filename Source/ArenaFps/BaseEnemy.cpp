@@ -111,7 +111,7 @@ void ABaseEnemy::StopBurning()
 	isBurning = false;
 }
 
-// En théorie c'est l'attaque qui devrait changer la vie, mais pour la V0 je fais ca comme ca, on changera après
+// En thé§®rie c'est l'attaque qui devrait changer la vie, mais pour la V0 je fais ca comme ca, on changera apré‘š
 
 void ABaseEnemy::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {

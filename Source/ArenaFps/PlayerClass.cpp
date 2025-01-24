@@ -269,12 +269,12 @@ void APlayerClass::AttackFireProjectile(FVector spawnPosition, FRotator spawnRot
 	}
 
 	//FVector SphereLocation = spawnPosition; // Exemple de position
-	//float SphereRadius = 50.0f; // Rayon de la sphère
-	//int32 Segments = 12; // Complexité de la sphère
-	//FColor SphereColor = FColor::Red; // Couleur de la sphère
-	//float Duration = 10.0f; // Durée d'affichage en secondes
-	//bool bPersistentLines = true; // Si vrai, la sphère reste visible après Duration si la console est ouverte
-	//float LineThickness = 0.5; // Épaisseur des lignes de la sphère
+	//float SphereRadius = 50.0f; // Rayon de la sphé‘½e
+	//int32 Segments = 12; // Complexitãƒ»de la sphé‘½e
+	//FColor SphereColor = FColor::Red; // Couleur de la sphé‘½e
+	//float Duration = 10.0f; // Duré¦¥ d'affichage en secondes
+	//bool bPersistentLines = true; // Si vrai, la sphé‘½e reste visible apré‘š Duration si la console est ouverte
+	//float LineThickness = 0.5; // ï¾‰paisseur des lignes de la sphé‘½e
 
 	//DrawDebugSphere(GetWorld(), SphereLocation, SphereRadius, Segments, SphereColor, bPersistentLines, Duration, 0, LineThickness);
 
@@ -331,7 +331,7 @@ void APlayerClass::ChangeHealth(int amount)
 			{
 				PC->SetPause(true);
 
-				// Assurez-vous que l'UI peut toujours recevoir des entrées
+				// Assurez-vous que l'UI peut toujours recevoir des entré¦¥s
 				FInputModeUIOnly InputMode;
 				InputMode.SetWidgetToFocus(GameOverWidgetRef->TakeWidget());
 				PC->SetInputMode(InputMode);
@@ -340,7 +340,7 @@ void APlayerClass::ChangeHealth(int amount)
 				PC->bEnableMouseOverEvents = true;
 				PC->bEnableTouchEvents = true;
 
-				// Activer le curseur si nécessaire
+				// Activer le curseur si né¦—essaire
 				PC->bShowMouseCursor = true;
 			}
 		}
@@ -363,7 +363,7 @@ FVector APlayerClass::ReturnSightTargetLocation()
 	{
 		if (HitResult.bBlockingHit)
 		{
-			EndPoint = HitResult.Location; // Si un objet est touché, utiliser ce point
+			EndPoint = HitResult.Location; // Si un objet est touchãƒ» utiliser ce point
 		}
 	}
 
