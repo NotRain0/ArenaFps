@@ -40,7 +40,8 @@ void ABaseProjectile::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor
 		{
 			float damageToDisplay = 0;
 			bool isHeadshot = false; 
-			EnemyRef->isBurning = true;
+
+			EnemyRef->StartBurning();
 
 			if (OtherComp->ComponentHasTag("BodyTag"))
 			{

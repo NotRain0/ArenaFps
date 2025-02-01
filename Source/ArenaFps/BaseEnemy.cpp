@@ -73,6 +73,25 @@ void ABaseEnemy::Attack()
 
 }
 
+void ABaseEnemy::StartBurning() //Called when hit by a fireball
+{
+	UE_LOG(LogTemp, Warning, TEXT("Called start burning"));
+	//GetWorld()->GetTimerManager().SetTimer(BurningTimerRef, this, &ABaseEnemy::StopBurning, 3.0f, false); //reset end burn timer
+	burnCounter = 3;
+
+	if (!isBurning)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Wasnt burning before"));
+		isBurning = true;
+		baseMaterial = burningMaterial;
+
+		burnCounter = 3;
+
+		FTimerHandle TimerHandleRef;
+		GetWorld()->GetTimerManager().SetTimer(TimerHandleRef, this, &ABaseEnemy::DealBurningDamage, 1.0f, false);
+	}
+}
+
 void ABaseEnemy::DealBurningDamage()
 {
 	ATextActor* TextActorRef = GetWorld()->SpawnActor<ATextActor>(BurningTextActorToSpawn, GetActorLocation(), FRotator(0, 0, 0));
@@ -81,34 +100,30 @@ void ABaseEnemy::DealBurningDamage()
 		TextActorRef->SetDamageText(5, false);
 	}
 
-	if (burnCounter > 0)
+	ChangeHealth(-5);
+	burnCounter -= 1;
+
+	if (burnCounter == 0)
 	{
-		burnCounter -= 1;
+		StopBurning();
+	}
+	else
+	{
 		FTimerHandle TimerHandleRef;
 		GetWorld()->GetTimerManager().SetTimer(TimerHandleRef, this, &ABaseEnemy::DealBurningDamage, 1.0f, false);
-
 	}
-}
-
-void ABaseEnemy::StartBurning()
-{
-	GetWorld()->GetTimerManager().SetTimer(BurningTimerRef, this, &ABaseEnemy::StopBurning, 3.0f, false);
-	baseMaterial = burningMaterial;
-
-	burnCounter = 2;
-	isBurning = true;
-
-	FTimerHandle TimerHandleRef;
-	GetWorld()->GetTimerManager().SetTimer(TimerHandleRef, this, &ABaseEnemy::DealBurningDamage, 1.0f, false);
 }
 
 void ABaseEnemy::StopBurning()
 {
-	baseMaterial = defaultMaterial;
-	currentMaterial = baseMaterial;
-	bodyMesh->SetMaterial(0, baseMaterial);
+	if (burnCounter == 0) // in case start burning was triggered meanwhile
+	{
+		baseMaterial = defaultMaterial;
+		currentMaterial = baseMaterial;
+		bodyMesh->SetMaterial(0, baseMaterial);
 
-	isBurning = false;
+		isBurning = false;
+	}
 }
 
 // En th駮rie c'est l'attaque qui devrait changer la vie, mais pour la V0 je fais ca comme ca, on changera apr鑚

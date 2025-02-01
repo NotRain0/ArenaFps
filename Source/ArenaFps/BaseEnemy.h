@@ -58,8 +58,12 @@ public: // Temporary, only for V0 purpose
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character Ref")
 	UMaterialInterface* redMaterial;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character Ref")
+	UMaterialInterface* burningMaterial;
 	UMaterialInterface* currentMaterial;
 	UMaterialInterface* baseMaterial;
+	UMaterialInterface* defaultMaterial;
 
 	void ChangeMaterial();
 
@@ -68,11 +72,18 @@ public: // Temporary, only for V0 purpose
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character Stat")
 	ABrazierClass* brazierTarget;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Character Stat")
 	bool isBurning = false;
 	
-	void SetAblaze();
+	void StartBurning();
+	void StopBurning();
+	void DealBurningDamage();
+	int burnCounter = 0;
 
-	//FTimer* BurningTimer;
+	FTimerHandle BurningTimerRef;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character Ref")
+	TSubclassOf<AActor> BurningTextActorToSpawn;
 
 
 
