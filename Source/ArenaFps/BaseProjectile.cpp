@@ -16,6 +16,9 @@ ABaseProjectile::ABaseProjectile()
 	MeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MeshComponent"));
 	RootComponent = MeshComponent;
 
+	VisualSceneComp = CreateDefaultSubobject<USceneComponent>(TEXT("Visual Scene Component"));
+	VisualSceneComp->SetupAttachment(MeshComponent);
+
 }
 
 // Called when the game starts or when spawned

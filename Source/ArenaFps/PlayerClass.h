@@ -74,7 +74,7 @@ public:
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	FVector ReturnSightTargetLocation();
+	AActor* ReturnSightTarget();
 
 public : 
 
@@ -138,7 +138,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character Stat")
 	int currentWeapon = 0;
 
-	void AttackFireProjectile(FVector spawnPosition, FRotator spawnRotation);
+	void SpawnFireProjectile(FVector spawnPosition, FRotator spawnRotation);
 
 	void AttackSpawnSpike(FVector spawnPosition, FRotator spawnRotation);
 

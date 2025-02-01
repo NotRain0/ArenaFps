@@ -25,6 +25,9 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Var")
+	USceneComponent* VisualSceneComp;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Var")
 	UStaticMeshComponent* MeshComponent;
 
 	UPROPERTY(EditAnywhere, Category = "Var")
@@ -39,10 +42,15 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Var")
 	int timeBeforeSelfDestruct = 10.0f;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Player Var")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Var")
 	FVector ProjectileDirection;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character Ref")
+	bool isAutoAimed = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Var")
+	AActor* ProjectileTarget;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ref")
 	TSubclassOf<AActor> TextActorToSpawn;
 
 	UFUNCTION(BlueprintCallable, Category = "MyFunctions")
@@ -50,4 +58,6 @@ public:
 
 	UFUNCTION()
 	virtual void DestroyProjectile();
+
+
 };

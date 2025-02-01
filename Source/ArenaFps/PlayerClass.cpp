@@ -95,7 +95,7 @@ void APlayerClass::RegenFunction()
 	currentHealth = FMath::Clamp((currentHealth + healthRegenAmount * 0.2), 0.0f, maxHealth);
 	
 	//if (timeSinceLastShot > 0.5)
-	if (firstWeaponCurrentAmmo > 10)
+	if (firstWeaponCurrentAmmo >= 10)
 	{
 		firstWeaponCurrentAmmo = FMath::Clamp((firstWeaponCurrentAmmo + firstWeaponAmmoRegenAmount * 0.2), 0.0f, firstWeaponMaxAmmo);
 		PlayerWidgetRef->ChangeOverHeatProgress(firstWeaponCurrentAmmo / firstWeaponMaxAmmo);
@@ -172,27 +172,36 @@ void APlayerClass::Attack()
 	{
 		if (currentWeapon == 0)
 		{
-			if (firstWeaponCurrentAmmo > 10 && canShootAgainFirstWeapon)
+			if (firstWeaponCurrentAmmo >= 10 && canShootAgainFirstWeapon)
 			{
-				FVector CameraForwardVector = CameraComponent->GetForwardVector();
-				FVector CameraLocation = CameraComponent->GetComponentLocation();
-
-				FVector LaunchPosition;
+				FVector HandPosition;
 				if (shootSphere1)
 				{
-					LaunchPosition = sphere1->GetComponentLocation();
+					HandPosition = sphere1->GetComponentLocation();
 					AnimateLeftHand();
 				}
 				else
 				{
-					LaunchPosition = sphere2->GetComponentLocation();
+					HandPosition = sphere2->GetComponentLocation();
 					AnimateRightHand();
 				}
 				shootSphere1 = !shootSphere1;
 
 				DynamicMaterialInstance->SetScalarParameterValue(FName("HandColorParam"), (firstWeaponCurrentAmmo / firstWeaponMaxAmmo));
 
-				AttackFireProjectile(LaunchPosition, FRotator(0, 0, 0));
+				FVector CameraForwardVector = CameraComponent->GetForwardVector();
+				FVector CameraLocation = CameraComponent->GetComponentLocation();
+
+				FVector LaunchPosition = CameraLocation; //+(CameraForwardVector * 50.0f);
+				FRotator ProjectileRotation = FRotationMatrix::MakeFromX(CameraForwardVector).Rotator();
+
+				ABaseProjectile* ProjectileRef = GetWorld()->SpawnActor<ABaseProjectile>(ProjectileClass, LaunchPosition, ProjectileRotation);
+
+				if (ProjectileRef)
+				{
+					ProjectileRef->ProjectileDirection = CameraForwardVector;
+					ProjectileRef->VisualSceneComp->SetWorldLocation(HandPosition);
+				}
 
 				canShootAgainFirstWeapon = false;
 				timeSinceLastShot = 0.0f;
@@ -231,7 +240,7 @@ void APlayerClass::Attack()
 	}
 }
 
-void APlayerClass::AttackFireProjectile(FVector spawnPosition, FRotator spawnRotation)
+void APlayerClass::SpawnFireProjectile(FVector spawnPosition, FRotator spawnRotation) //inutilisée atm
 {
 	//Spawn du projectile
 
@@ -249,10 +258,10 @@ void APlayerClass::AttackFireProjectile(FVector spawnPosition, FRotator spawnRot
 		UGameplayStatics::PlaySound2D(GetWorld(), FireBall3);
 	}
 
-	FVector Direction = ReturnSightTargetLocation() - spawnPosition;
-	Direction.Normalize();
+	//FVector Direction = ReturnSightTargetLocation() - spawnPosition;
+	//Direction.Normalize();
 
-	spawnPosition = spawnPosition - Direction * 500;
+	//spawnPosition = spawnPosition - Direction * 500;
 
 
 	if (!ProjectileClass || !CameraComponent)
@@ -277,8 +286,6 @@ void APlayerClass::AttackFireProjectile(FVector spawnPosition, FRotator spawnRot
 	//float LineThickness = 0.5; // ﾉpaisseur des lignes de la sph鑽e
 
 	//DrawDebugSphere(GetWorld(), SphereLocation, SphereRadius, Segments, SphereColor, bPersistentLines, Duration, 0, LineThickness);
-
-	ProjectileRef->ProjectileDirection = Direction;
 }
 
 void APlayerClass::AttackSpawnSpike(FVector spawnPosition, FRotator spawnRotation)
@@ -348,13 +355,13 @@ void APlayerClass::ChangeHealth(int amount)
 	}
 }
 
-FVector APlayerClass::ReturnSightTargetLocation()
+AActor* APlayerClass::ReturnSightTarget()
 {
 	FVector CameraLocation;
 	FRotator CameraRotation;
 	GetActorEyesViewPoint(CameraLocation, CameraRotation);
 
-	FVector EndPoint = CameraLocation + CameraRotation.Vector() * 2000;
+	FVector EndPoint = CameraLocation + CameraRotation.Vector() * 10000;
 	FHitResult HitResult;
 	FCollisionQueryParams QueryParams;
 	QueryParams.AddIgnoredActor(this);
@@ -367,7 +374,7 @@ FVector APlayerClass::ReturnSightTargetLocation()
 		}
 	}
 
-	return EndPoint;
+	return this;
 }
 
 // Called to bind functionality to input
