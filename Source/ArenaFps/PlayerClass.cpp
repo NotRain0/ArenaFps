@@ -19,6 +19,7 @@
 // //
 #include "PlayerWidget.h"
 #include "BaseProjectile.h"
+#include "PlayerProjectile.h"
 
 
 // Called when the game starts or when spawned
@@ -159,6 +160,10 @@ void APlayerClass::Dash()
 
 void APlayerClass::ChangeWeapon()
 {
+	if (!canChangeWeapon) {
+		return;
+	}
+
 	currentWeapon += 1;
 	if (currentWeapon > 1) // en vrai on pourrait juste use une bool mais bon voyons grands
 	{
@@ -170,6 +175,12 @@ void APlayerClass::Attack()
 {
 	if (!isAttacking && canAttack)
 	{
+		FVector CameraForwardVector = CameraComponent->GetForwardVector();
+		FVector CameraLocation = CameraComponent->GetComponentLocation();
+
+		FVector LaunchPosition = CameraLocation; //+(CameraForwardVector * 50.0f);
+		FRotator ProjectileRotation = FRotationMatrix::MakeFromX(CameraForwardVector).Rotator();
+
 		if (currentWeapon == 0)
 		{
 			if (firstWeaponCurrentAmmo >= 10 && canShootAgainFirstWeapon)
@@ -187,13 +198,8 @@ void APlayerClass::Attack()
 				}
 				shootSphere1 = !shootSphere1;
 
-				DynamicMaterialInstance->SetScalarParameterValue(FName("HandColorParam"), (firstWeaponCurrentAmmo / firstWeaponMaxAmmo));
-
-				FVector CameraForwardVector = CameraComponent->GetForwardVector();
-				FVector CameraLocation = CameraComponent->GetComponentLocation();
-
-				FVector LaunchPosition = CameraLocation; //+(CameraForwardVector * 50.0f);
-				FRotator ProjectileRotation = FRotationMatrix::MakeFromX(CameraForwardVector).Rotator();
+				float colorRatio = firstWeaponCurrentAmmo / firstWeaponMaxAmmo; // 1 a 0, puis on met au carré pour accelerer la descente.
+				DynamicMaterialInstance->SetScalarParameterValue(FName("HandColorParam"), (FMath::Pow(colorRatio, 2)));
 
 				ABaseProjectile* ProjectileRef = GetWorld()->SpawnActor<ABaseProjectile>(ProjectileClass, LaunchPosition, ProjectileRotation);
 
@@ -226,7 +232,7 @@ void APlayerClass::Attack()
 							firstWeaponCurrentAmmo = firstWeaponMaxAmmo;
 							DynamicMaterialInstance->SetScalarParameterValue(FName("HandColorParam"), (firstWeaponCurrentAmmo / firstWeaponMaxAmmo));
 							PlayerWidgetRef->ChangeOverHeatProgress(firstWeaponCurrentAmmo / firstWeaponMaxAmmo);
-						}, 1.5, false);
+						}, 0.5f, false);
 				}
 
 			}
@@ -234,8 +240,45 @@ void APlayerClass::Attack()
 		
 		else if (currentWeapon == 1)
 		{
+			if (canShootAgainSecondWeapon)
+			{
+				canChangeWeapon = false;
+				canShootAgainSecondWeapon = false;
+				timeSinceLastShot = 0.0f;
 
-			UE_LOG(LogTemp, Warning, TEXT("Attacked with wep 1"));
+				LaunchPosition = CameraLocation;
+				LaunchPosition.Z -= 65;
+				LaunchPosition.X += 35;
+				ProjectileRotation = FRotationMatrix::MakeFromX(CameraForwardVector).Rotator();
+
+				ExplosiveProjectileRef = GetWorld()->SpawnActor<APlayerProjectile>(SecondWeaponProjectileClass, LaunchPosition, ProjectileRotation);
+
+				if (!ExplosiveProjectileRef){
+					return;
+				}
+
+				ExplosiveProjectileRef->AttachToComponent(this->GetRootComponent(), FAttachmentTransformRules::KeepWorldTransform);
+
+				FTimerHandle TimerHandleWep2Throw; //On détache le projectile du joueur
+				GetWorld()->GetTimerManager().SetTimer(TimerHandleWep2Throw, [this]()
+					{
+						canChangeWeapon = true;
+
+						if (ExplosiveProjectileRef)
+						{
+							ExplosiveProjectileRef->isMoving = true;
+							ExplosiveProjectileRef->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
+							ExplosiveProjectileRef->ProjectileDirection = CameraComponent->GetForwardVector();
+							canChangeWeapon = true;
+						}
+					}, 0.75f, false);
+
+				FTimerHandle TimerHandleAutoWep2;
+				GetWorld()->GetTimerManager().SetTimer(TimerHandleAutoWep2, [this]()
+					{
+						canShootAgainSecondWeapon = true;
+					}, secondWeaponCooldown, false);
+			}
 		}
 	}
 }
@@ -368,13 +411,14 @@ AActor* APlayerClass::ReturnSightTarget()
 
 	if (GetWorld()->LineTraceSingleByChannel(HitResult, CameraLocation, EndPoint, ECC_Visibility, QueryParams))
 	{
-		if (HitResult.bBlockingHit)
+		AActor* HitActor = HitResult.GetActor();
+		if (HitActor)
 		{
-			EndPoint = HitResult.Location; // Si un objet est touch・ utiliser ce point
+			return HitActor;
 		}
 	}
 
-	return this;
+	return nullptr;
 }
 
 // Called to bind functionality to input

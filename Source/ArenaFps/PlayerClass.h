@@ -15,6 +15,7 @@ class USoundBase;
 //
 class UPlayerWidget;
 class ABaseProjectile;
+class APlayerProjectile;
 
 UCLASS()
 class ARENAFPS_API APlayerClass : public ACustomCharacterClass
@@ -95,6 +96,9 @@ public :
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character Ref")
 	TSubclassOf<ABaseProjectile> ProjectileClass;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character Ref")
+	TSubclassOf<APlayerProjectile> SecondWeaponProjectileClass;
+
 	//Spike
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character Ref")
 	TSubclassOf<AActor> SpikeClass;
@@ -138,6 +142,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character Stat")
 	int currentWeapon = 0;
 
+	bool canChangeWeapon = true;
+
 	void SpawnFireProjectile(FVector spawnPosition, FRotator spawnRotation);
 
 	void AttackSpawnSpike(FVector spawnPosition, FRotator spawnRotation);
@@ -166,8 +172,23 @@ public:
 	float delayBetweenFirstWeaponShot = 0.35;
 
 	float timeSinceLastShot = 0.0f;
-
 	bool canShootAgainFirstWeapon = true;
+
+//////
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character Stat")
+	float secondWeaponCooldown = 1.5f;
+
+	bool canShootAgainSecondWeapon = true;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character Ref")
+	FVector SpawnOffsetSecondWeapon;
+
+	APlayerProjectile* ExplosiveProjectileRef;
+
+	void SpawnSecondWeaponProjectile();
+
+
 
 	void RegenFunction();
 
