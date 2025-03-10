@@ -18,12 +18,10 @@ ASpawnerClass::ASpawnerClass()
 void ASpawnerClass::BeginPlay()
 {
 	Super::BeginPlay();
-
 }
 
 // Called every frame
 void ASpawnerClass::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
