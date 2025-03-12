@@ -85,6 +85,4 @@ public: // Temporary, only for V0 purpose
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character Ref")
 	TSubclassOf<AActor> BurningTextActorToSpawn;
 
-
-
 };
