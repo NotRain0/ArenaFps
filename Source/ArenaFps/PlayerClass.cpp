@@ -238,7 +238,7 @@ void APlayerClass::Attack()
 			}
 		}
 		
-		else if (currentWeapon == 1)
+		else if (currentWeapon == 1) //explosive one
 		{
 			if (canShootAgainSecondWeapon)
 			{
@@ -246,9 +246,7 @@ void APlayerClass::Attack()
 				canShootAgainSecondWeapon = false;
 				timeSinceLastShot = 0.0f;
 
-				LaunchPosition = CameraLocation;
-				LaunchPosition.Z -= 65;
-				LaunchPosition.X += 35;
+				LaunchPosition = CameraLocation + (CameraForwardVector * 50.0f);
 				ProjectileRotation = FRotationMatrix::MakeFromX(CameraForwardVector).Rotator();
 
 				ExplosiveProjectileRef = GetWorld()->SpawnActor<APlayerProjectile>(SecondWeaponProjectileClass, LaunchPosition, ProjectileRotation);
@@ -256,6 +254,10 @@ void APlayerClass::Attack()
 				if (!ExplosiveProjectileRef){
 					return;
 				}
+
+				UE_LOG(LogTemp, Warning, TEXT("Position of camera is : %s"), *LaunchPosition.ToString());
+				UE_LOG(LogTemp, Warning, TEXT("Position of ball is : %s"), *ExplosiveProjectileRef->GetActorLocation().ToString());
+
 
 				ExplosiveProjectileRef->AttachToComponent(this->GetRootComponent(), FAttachmentTransformRules::KeepWorldTransform);
 
@@ -270,6 +272,7 @@ void APlayerClass::Attack()
 							ExplosiveProjectileRef->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
 							ExplosiveProjectileRef->ProjectileDirection = CameraComponent->GetForwardVector();
 							canChangeWeapon = true;
+
 						}
 					}, 0.75f, false);
 

@@ -120,7 +120,7 @@ void ABaseEnemy::StopBurning()
 	{
 		baseMaterial = defaultMaterial;
 		currentMaterial = baseMaterial;
-		bodyMesh->SetMaterial(0, baseMaterial);
+		//bodyMesh->SetMaterial(0, baseMaterial);
 
 		isBurning = false;
 	}
