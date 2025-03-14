@@ -12,18 +12,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="37901e41-fd24-4f9e-84cd-9d0722bae76b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.ArenaFps/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ArenaFps/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Art/Materials/M_Blue.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Art/Materials/M_Blue.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprint/Characters/BP_BaseEnemy.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Characters/BP_BaseEnemy.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprint/Characters/Behavior/BP_IA_CrowdController.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Characters/Behavior/BP_IA_CrowdController.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprint/Characters/Behavior/BTTask_DetectPlayer.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Characters/Behavior/BTTask_DetectPlayer.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprint/Characters/Behavior/BTTask_Swap_Target.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Characters/Behavior/BTTask_Swap_Target.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprint/Characters/Behavior/BT_Enemy1.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Characters/Behavior/BT_Enemy1.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprint/Projectile/BP_PlayerProjectile.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Projectile/BP_PlayerProjectile.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ArenaFps/BaseEnemy.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ArenaFps/BaseEnemy.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/ArenaFps/SpawnerClass.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ArenaFps/SpawnerClass.cpp" afterDir="false" />
-    </list>
+    <list default="true" id="37901e41-fd24-4f9e-84cd-9d0722bae76b" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -36,11 +25,11 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/../../ArenaFps/Source/ArenaFps/BaseEnemy.h" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/ArenaFps/EnemyAttackFireProjectileTask.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/ArenaFps/EnemyAttackFireProjectileTask.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/ArenaFps/EnemyProjectile.cpp" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Source/ArenaFps/EnemyProjectile.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../CPPhysique/Source/CPPhysique/MovingPlatform.cpp" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="Toolset" />
@@ -189,6 +178,7 @@
       <workItem from="1737732201593" duration="489000" />
       <workItem from="1741598949074" duration="76000" />
       <workItem from="1741599485481" duration="9765000" />
+      <workItem from="1741776764671" duration="10881000" />
     </task>
     <servers />
   </component>
