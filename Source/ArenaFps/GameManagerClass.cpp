@@ -119,17 +119,19 @@ void AGameManagerClass::SpawnEnemy()
 	{
 		float smallestDistance = FVector::Dist(SpawnedActor->GetActorLocation(), BrazierArray[0]->GetActorLocation());
 
+		int targetIndex = 0;
 		for (int i = 0; i < BrazierArray.Num(); i++)
 		{
 			float testDistance = FVector::Dist(SpawnedActor->GetActorLocation(), BrazierArray[i]->GetActorLocation());
 			if (testDistance <= smallestDistance)
 			{
 				smallestDistance = testDistance;
-				SpawnedActor->brazierTarget = BrazierArray[i];
-
-				UE_LOG(LogTemp, Error, TEXT("Npc going to fire index : %d"), i);
+				targetIndex = i;
 			}
 		}
+
+		SpawnedActor->brazierTarget = BrazierArray[targetIndex];
+		UE_LOG(LogTemp, Error, TEXT("Npc going to fire index : %d"), targetIndex);
 		//SpawnedActor->brazierTarget = BrazierArray[FMath::RandRange(0, BrazierArray.Num() - 1)];
 	}
 }
