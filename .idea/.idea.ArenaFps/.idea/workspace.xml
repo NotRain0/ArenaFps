@@ -14,8 +14,6 @@
   <component name="ChangeListManager">
     <list default="true" id="37901e41-fd24-4f9e-84cd-9d0722bae76b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ArenaFps/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ArenaFps/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprint/Characters/Behavior/BTTask_Swap_Target.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Characters/Behavior/BTTask_Swap_Target.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprint/Characters/Behavior/BT_Enemy1.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Characters/Behavior/BT_Enemy1.uasset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -183,7 +181,7 @@
       <workItem from="1741598949074" duration="76000" />
       <workItem from="1741599485481" duration="9765000" />
       <workItem from="1741776764671" duration="10881000" />
-      <workItem from="1742424096538" duration="1946000" />
+      <workItem from="1742424096538" duration="2629000" />
     </task>
     <servers />
   </component>
