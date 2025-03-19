@@ -334,20 +334,20 @@ void APlayerClass::SpawnFireProjectile(FVector spawnPosition, FRotator spawnRota
 	//DrawDebugSphere(GetWorld(), SphereLocation, SphereRadius, Segments, SphereColor, bPersistentLines, Duration, 0, LineThickness);
 }
 
-void APlayerClass::AttackSpawnSpike(FVector spawnPosition, FRotator spawnRotation)
-{
-
-	//Spawn du spike
-	if (spikeRef)
-	{
-		spikeRef->Destroy();
-	}
-	spawnRotation = FRotator(0.0f, spawnRotation.Yaw, 0.0f);
-	spawnPosition = GetActorLocation();
-	spawnPosition = GetActorLocation() - FVector(0.0f, 0.0f, GetCapsuleComponent()->GetScaledCapsuleHalfHeight());
-
-	spikeRef = GetWorld()->SpawnActor<AActor>(SpikeClass, spawnPosition, spawnRotation);
-}
+//void APlayerClass::AttackSpawnSpike(FVector spawnPosition, FRotator spawnRotation)
+//{
+//
+//	//Spawn du spike
+//	if (spikeRef)
+//	{
+//		spikeRef->Destroy();
+//	}
+//	spawnRotation = FRotator(0.0f, spawnRotation.Yaw, 0.0f);
+//	spawnPosition = GetActorLocation();
+//	spawnPosition = GetActorLocation() - FVector(0.0f, 0.0f, GetCapsuleComponent()->GetScaledCapsuleHalfHeight());
+//
+//	spikeRef = GetWorld()->SpawnActor<AActor>(SpikeClass, spawnPosition, spawnRotation);
+//}
 
 void APlayerClass::ChangeHealth(int amount)
 {
