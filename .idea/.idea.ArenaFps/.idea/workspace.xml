@@ -14,6 +14,8 @@
   <component name="ChangeListManager">
     <list default="true" id="37901e41-fd24-4f9e-84cd-9d0722bae76b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ArenaFps/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ArenaFps/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprint/Brasier/BP_Brazier.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Brasier/BP_Brazier.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Maps/L_V1Map.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Maps/L_V1Map.umap" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -182,6 +184,7 @@
       <workItem from="1741599485481" duration="9765000" />
       <workItem from="1741776764671" duration="10881000" />
       <workItem from="1742424096538" duration="2629000" />
+      <workItem from="1742553915552" duration="1520000" />
     </task>
     <servers />
   </component>
