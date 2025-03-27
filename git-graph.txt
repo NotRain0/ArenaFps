@@ -1,0 +1,117 @@
+* 6364472 Music added
+* 02842fa Music integrated
+* c91f40d Fixed quick projectile firing
+* 2f06b5a Final push of day
+*   6a86daf Merge branch 'main' of https://github.com/NotRain0/ArenaFps
+|\  
+| *   09ec50e Merge branch 'main' of https://github.com/NotRain0/ArenaFps
+| |\  
+| * | b1f4f97 small fix
+* | | d65d36e Quick fix brazier in enemy rework
+| |/  
+|/|   
+* | 1908913 Fixed cast
+|/  
+* e19877f Change brasier
+*   6e18287 Merge branch 'main' of https://github.com/NotRain0/ArenaFps
+|\  
+| * 0c33cbd not sure what
+| * 39aefc2 finished 2nd wep and reworked text dmg display a bit
+| * 2a6db58 Pushed hand anims and visual second wep + explosion
+| * 1488093 Finished working on laser and burn effect
+| * babbebf first set of push for rework
+* | 295dfa4 pull add bis
+* | 9c48f1c pull add
+* | ffc62d9 arena
+|/  
+* c1ed160 ProtoEnemy 2
+* d141381 Patrolling Enemy 2 + launch
+*   cb0f65f Merge branch 'main' of https://github.com/NotRain0/ArenaFps
+|\  
+| * 081ad07 First Tasks in Enemy 2
+| *   592df71 Merge branch 'main' of https://github.com/NotRain0/ArenaFps
+| |\  
+| * | 149bccf Creation of Enemy 2 + fix enemy 1 behaviour
+* | | 3ef996d pushed temp changes
+| |/  
+|/|   
+* | 6fd79ed pushed arena
+* | cffb06a Moved level and created new one
+|/  
+* 0b35bdc Revert "ajout level design"
+* f99714a ajout level design
+* 12d9c1a working on stuff, not even sure what
+* 20bf4ba Fixed player aim
+* aa7f8a1 Fixed burning dmg re-stacking and timer
+* dc8cea9 Branch fix last version.
+| * 3c0eebb InitNewIndependant
+|/  
+*   ef7b82e Merge branch 'main' of https://github.com/NotRain0/ArenaFps
+|\  
+| * 4222161 Revert "fixed a bit"
+| * 224f82e Revert "Added more precision"
+| * 97fbb7c Added more precision
+| * 0cd81d7 fixed a bit
+| *   1b41111 Merge branch 'main' of https://github.com/NotRain0/ArenaFps
+| |\  
+| | * 24ac84a Revert "Temple integration (without collider)"
+| | * 76887a1 Revert "Merge branch 'main' of https://github.com/NotRain0/ArenaFps"
+| | * 5fd7309 Revert "Projectile adjustement"
+* | | 82170b1 Test push
+|/ /  
+* / edac47a Delete fbx & level
+|/  
+* 0e08f8d Projectile adjustement
+*   5045858 Merge branch 'main' of https://github.com/NotRain0/ArenaFps
+|\  
+| * 3a4481c Did adjustement
+* | 8f19a89 Temple integration (without collider)
+|/  
+* 11d2ccf Stuff
+* 863b6d8 Added stuff
+* df06f1c Lot of stuff
+* b2a1396 Behaviour tree and AI fine tuning
+* 5382f21 Changes environnement for AI
+* 979cad6 Added enemy projectile wall block
+* 533230c Enemy projectile added
+* 739338b fck you i aint listing all that
+* facda44 Added interruption of moveto in BT
+*   3626818 Merge branch 'main' of https://github.com/NotRain0/ArenaFps
+|\  
+| * 3a47a9a Worked on max + enemy stuff
+* | d876324 Enemy AI adjustements
+|/  
+*   8b32737 Merge branch 'main' of https://github.com/NotRain0/ArenaFps
+|\  
+| * 8a15055 Added virtual to BaseProjectile
+* | 55e603b Test
+|/  
+* aed249d Test comment
+*   04a0eff Merge branch 'main' of https://github.com/NotRain0/ArenaFps
+|\  
+| * d59faf5 Finished spawner
+* | 8411516 Task AI enemy 1
+|/  
+*   4972193 Merge branch 'main' of https://github.com/NotRain0/ArenaFps
+|\  
+| * 0537f17 Added spawner and brazier to project
+* | 5f91145 Tasks for basic ennemies
+|/  
+*   144cdf8 Merge branch 'main' of https://github.com/NotRain0/ArenaFps
+|\  
+| * afeb132 started working on brazier
+* | debabd5 Commit before branching
+|/  
+*   3097d8b Merge branch 'main' of https://github.com/NotRain0/ArenaFps
+|\  
+| * 664ed7b Added brazier and behavior
+* | 1f43a99 Time Projectile
+|/  
+* 2e6472d fixed few bugs
+* ee35b4f Added restart button
+* 7134baf Overworked for project start
+* fcc3ce4 Done projectile
+* 0e5cc49 Added IA controller bases
+* 256ced5 Setup project
+* e56e14a Created the repository
+* f93b9b1 Initial commit
