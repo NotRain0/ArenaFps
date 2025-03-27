@@ -34,15 +34,21 @@ Cependant, un *asset* provenant de notre équipe artistique a effectivement dép
 
 L’option d’utiliser **Diversion**, un outil de *version control* alternatif conçu spécifiquement pour Unreal Engine et les fichiers `.uasset`, a été étudiée. Après considération, cette solution n’a pas été retenue en raison de notre manque de familiarité avec l’outil, ce qui aurait pu entraîner une perte de temps inutile.
 
+---
+
 # Leçons apprises
 
 Lors de la première semaine intensive, un conflit important a entraîné la perte de modifications sur un *level*. Cela s’est produit parce que, sous la pression de la deadline, les mécanismes de prudence que nous avions mis en place n'ont pas été respectés.
 
 Cet incident nous a appris l’importance de ralentir le rythme des *push*, même en période de stress, et de rester rigoureux quant aux bonnes pratiques établies. Une meilleure discipline collective à ce niveau nous a permis d’éviter que ce genre de situation ne se reproduise par la suite.
 
+---
+
 # Conclusion
 
 En résumé, notre approche Git, bien qu’adaptée à notre contexte de petite équipe et à notre besoin de **rapidité**, s’est appuyée sur des principes solides : communication constante, séparation des responsabilités, rigueur sur les commits, et adaptation progressive du *workflow*. Nous avons su tirer des leçons de nos erreurs pour construire un plan de production stable, fluide et collaboratif.
+
+---
 
 # Bonus
 
