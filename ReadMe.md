@@ -42,4 +42,8 @@ Cet incident nous a appris l’importance de ralentir le rythme des *push*, mêm
 
 # Conclusion
 
-En résumé, notre approche Git, bien qu’adaptée à notre contexte de petite équipe et à notre besoin de rapidité, s’est appuyée sur des principes solides : communication constante, séparation des responsabilités, rigueur sur les commits, et adaptation progressive du workflow. Nous avons su tirer des leçons de nos erreurs pour construire un plan de production stable, fluide et collaboratif.
+En résumé, notre approche Git, bien qu’adaptée à notre contexte de petite équipe et à notre besoin de **rapidité**, s’est appuyée sur des principes solides : communication constante, séparation des responsabilités, rigueur sur les commits, et adaptation progressive du *workflow*. Nous avons su tirer des leçons de nos erreurs pour construire un plan de production stable, fluide et collaboratif.
+
+# Bonus
+
+[Voir l’historique Git (git-graph.txt)](./git-graph.txt)
