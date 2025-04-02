@@ -40,5 +40,5 @@ void UPlayerWidget::DisplaySpeedOnDash()
 
 void UPlayerWidget::ChangeProgressBarFill(float amount)
 {
-    ProgressBar->SetPercent(amount);
+    HealthBar->SetPercent(amount);
 }

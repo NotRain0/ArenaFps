@@ -33,7 +33,7 @@ public :
 	UImage* SpeedVisual;
 
 	UPROPERTY(meta = (BindWidget))
-	UProgressBar* ProgressBar;
+	UProgressBar* HealthBar;
 
 	UPROPERTY(meta = (BindWidget))
 	UTextBlock* TimerTextBlock;

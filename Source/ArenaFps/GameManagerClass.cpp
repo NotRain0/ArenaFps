@@ -86,27 +86,6 @@ void AGameManagerClass::SpawnEnemy()
 		UE_LOG(LogTemp, Error, TEXT("No brasier left"));
 		return;
 	}
-	//TArray<ABrazierClass*> ValidBrazierArray = BrazierArray;
-
-	///// Get valid fire
-	//int fireTarget;
-	//for (int i = 0; i < BrazierArray.Num(); i++)
-	//{
-	//	if (!BrazierArray[i]->isImmune)
-	//	{
-	//		ValidBrazierArray.Add(BrazierArray[i]);
-	//	}
-	//}
-	//if (ValidBrazierArray.Num() == 0)
-	//{
-	//	fireTarget = 0;
-	//}
-	//else 
-	//{
-	//	fireTarget = FMath::RandRange(0, ValidBrazierArray.Num() - 1);
-	//}
-
-	//fireTarget = FMath::RandRange(0, ValidBrazierArray.Num() - 1);
 
 	FActorSpawnParameters SpawnParams;
 	SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn; // Ignorer les collisions lors du spawn
