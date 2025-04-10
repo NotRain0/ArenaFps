@@ -1,12 +1,9 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "BrazierClass.generated.h"
 
-class ABaseEnemy;
 class AGameManagerClass;
 
 UCLASS()
@@ -15,15 +12,12 @@ class ARENAFPS_API ABrazierClass : public AActor
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this actor's properties
 	ABrazierClass();
 
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public: // Temporary, only for V0 purpose
-
+public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "V0 var")
 	UStaticMeshComponent* fireMesh;
 
@@ -31,8 +25,6 @@ public: // Temporary, only for V0 purpose
 	UMaterialInterface* blueMaterial;
 	UMaterialInterface* baseMaterial;
 
-public:
-	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Component")
@@ -52,14 +44,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Fire Stat")
 	float FireRegenNearPlayer = 5;
 
-	/// <summary>
-	/// Une fonction appelée toutes les 0.2 sec pour verifier et baisser la santé du brazier
-	/// </summary>
 	void LowerFireHealth();
-
 	void ImmuneFireToDamage();
-
-	
 
 	bool isImmune = false;
 
@@ -79,7 +65,7 @@ public:
 	float killCount = 0;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Fire Stat")
-	TArray<ABaseEnemy*> EnemyArray;
+	TArray<AActor*> EnemyArray;
 
 	bool isPlayerInRange = false;
 
@@ -98,6 +84,4 @@ public:
 
 	UFUNCTION()
 	void OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
-
-
 };

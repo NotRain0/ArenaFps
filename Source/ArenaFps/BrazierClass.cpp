@@ -1,23 +1,14 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "BrazierClass.h"
 
 #include "Components/BoxComponent.h"
 #include "Kismet/GameplayStatics.h"
-
-#include "BaseEnemy.h"
 #include "GameManagerClass.h"
-#include "PlayerClass.h"
 
-// Sets default values
 ABrazierClass::ABrazierClass()
 {
-	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 }
 
-// Called when the game starts or when spawned
 void ABrazierClass::BeginPlay()
 {
 	Super::BeginPlay();
@@ -32,7 +23,7 @@ void ABrazierClass::BeginPlay()
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("no got collision box"));
+		UE_LOG(LogTemp, Warning, TEXT("No collision box found"));
 	}
 
 	currentHealth = maxHealth;
@@ -43,18 +34,17 @@ void ABrazierClass::BeginPlay()
 	LowerFireHealth();
 }
 
-// Called every frame
 void ABrazierClass::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 void ABrazierClass::LowerFireHealth()
 {
 	if (!isImmune)
 	{
-		currentHealth -= EnemyDamageToFire * EnemyArray.Num() * 0.2; //toutes les 0.2sec c'est appelé, soit 5x par sec, largement assez pour ce genre d'interraction et low dmg
+		currentHealth -= EnemyDamageToFire * EnemyArray.Num() * 0.2f;
+
 		if (currentHealth <= 0)
 		{
 			UE_LOG(LogTemp, Warning, TEXT("Fire died"));
@@ -63,26 +53,24 @@ void ABrazierClass::LowerFireHealth()
 	}
 
 	if (EnemyArray.Num() == 0)
-	{	
+	{
 		if (isPlayerInRange)
 		{
-			currentHealth = FMath::Clamp((currentHealth + FireRegenNearPlayer * 0.2), 0.0f, maxHealth);
+			currentHealth = FMath::Clamp((currentHealth + FireRegenNearPlayer * 0.2f), 0.0f, maxHealth);
 		}
 		else
 		{
-			currentHealth = FMath::Clamp((currentHealth + FireRegen * 0.2), 0.0f, maxHealth);
-			//UE_LOG(LogTemp, Warning, TEXT("I applied regen, now health is : %f"), currentHealth);
+			currentHealth = FMath::Clamp((currentHealth + FireRegen * 0.2f), 0.0f, maxHealth);
 		}
 	}
 
 	FTimerHandle TimerHandle;
-	GetWorldTimerManager().SetTimer(TimerHandle, this, &ABrazierClass::LowerFireHealth, 0.20, false); //recursif
+	GetWorldTimerManager().SetTimer(TimerHandle, this, &ABrazierClass::LowerFireHealth, 0.2f, false);
 }
 
 void ABrazierClass::ImmuneFireToDamage()
 {
-
-	if (isImmune) //On stop l'immunité
+	if (isImmune)
 	{
 		UE_LOG(LogTemp, Error, TEXT("Fire immune is now over"));
 		fireMesh->SetMaterial(0, baseMaterial);
@@ -90,18 +78,19 @@ void ABrazierClass::ImmuneFireToDamage()
 		killForImmune += killForImmuneDelta;
 		immuneDuration += immuneDurationDelta;
 	}
-
-	else //On passe immune et tue tout l'monde
+	else
 	{
 		UE_LOG(LogTemp, Error, TEXT("Fire fed, now is immune"));
 		fireMesh->SetMaterial(0, blueMaterial);
-		
-		TArray<ABaseEnemy*> EnemyArrayCopy = EnemyArray;
-		for (ABaseEnemy* enemRef : EnemyArrayCopy)
+
+		TArray<AActor*> EnemyArrayCopy = EnemyArray;
+		for (AActor* Enemy : EnemyArrayCopy)
 		{
-			if (enemRef) 
+			if (Enemy && Enemy->ActorHasTag("BaseEnemyTag"))
 			{
-				enemRef->ChangeHealth(-9999);
+				// Optional: Use an interface or BlueprintCallable function here
+				// Or you can Destroy() directly if it's enough
+				Enemy->Destroy();
 			}
 		}
 
@@ -117,7 +106,10 @@ void ABrazierClass::ImmuneFireToDamage()
 void ABrazierClass::DestroyFire()
 {
 	UGameplayStatics::PlaySound2D(GetWorld(), OnDestroyedSound);
-	GameManagerRef->BrazierArray.Remove(this);
+	if (GameManagerRef)
+	{
+		GameManagerRef->BrazierArray.Remove(this);
+	}
 	Destroy();
 }
 
@@ -128,10 +120,9 @@ void ABrazierClass::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* 
 		return;
 	}
 
-	if (OtherActor->ActorHasTag("EnemyTag") && !EnemyArray.Contains(OtherActor))
+	if (OtherActor->ActorHasTag("BaseEnemyTag") && !EnemyArray.Contains(OtherActor))
 	{
-		ABaseEnemy* EnemyRef = Cast<ABaseEnemy>(OtherActor);
-		EnemyArray.Add(EnemyRef);
+		EnemyArray.Add(OtherActor);
 	}
 	else if (OtherActor->ActorHasTag("PlayerTag"))
 	{
@@ -147,14 +138,12 @@ void ABrazierClass::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* Ot
 		return;
 	}
 
-	if (OtherActor->ActorHasTag("EnemyTag") && EnemyArray.Contains(OtherActor))
+	if (OtherActor->ActorHasTag("BaseEnemyTag") && EnemyArray.Contains(OtherActor))
 	{
-		ABaseEnemy* EnemyRef = Cast<ABaseEnemy>(OtherActor);
-		EnemyArray.Remove(EnemyRef);
-
-		if (EnemyRef && EnemyRef->currentHealth <= 0)
+		EnemyArray.Remove(OtherActor);
+		
+		if ((OtherActor->ActorHasTag("BaseEnemyTag")))
 		{
-			//it died within fire range
 			killCount += 1;
 			if (killCount == killForImmune)
 			{

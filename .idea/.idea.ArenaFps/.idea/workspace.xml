@@ -14,8 +14,10 @@
   <component name="ChangeListManager">
     <list default="true" id="37901e41-fd24-4f9e-84cd-9d0722bae76b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ArenaFps/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ArenaFps/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprint/Brasier/BP_Brazier.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprint/Brasier/BP_Brazier.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Maps/L_V1Map.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Maps/L_V1Map.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ArenaFps.uproject" beforeDir="false" afterPath="$PROJECT_DIR$/ArenaFps.uproject" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/__ExternalActors__/Levels/L_DevLevelRework/0/PQ/P5GVG62UTPV68ZZZKRADSD.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ArenaFps/BrazierClass.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ArenaFps/BrazierClass.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/ArenaFps/BrazierClass.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/ArenaFps/BrazierClass.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -185,6 +187,9 @@
       <workItem from="1741776764671" duration="10881000" />
       <workItem from="1742424096538" duration="2629000" />
       <workItem from="1742553915552" duration="1520000" />
+      <workItem from="1743705626762" duration="207000" />
+      <workItem from="1743705913124" duration="719000" />
+      <workItem from="1744319364194" duration="1437000" />
     </task>
     <servers />
   </component>
